@@ -34,4 +34,17 @@
 
 <!--If end of week for user is sunday or monday-->
 
-<!--At end of week give user summary on number of drawings/ avg amount of time spent on each drawing-->
+
+<!--list of ideas for drawings screen-->
+
+<!--Button for a widget thatrandomly selects one of the prompts from the list for user to follow for a drawing-->
+
+<!--lists of various discriptors of actions for a prompt (like specific style to draw in/ media used/ in color or not/ landscape or portrait 
+orientation/ )-->
+
+
+<!--At end of week give user summary on number of drawings/ avg amount of time spent on each drawing/ if prompts from lift were used/
+if prompt generator button was pressed-->
+
+
+<!---->
