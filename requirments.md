@@ -13,6 +13,11 @@
 <!-- goal widget could still keep track of goal in both daily and end of week version-->
 2. [ ] Prompted to enter desired amount of time (total) to spend drawing for the week or the desired amount of time to spend drawing per day.
 
+
+<!-- where ed said to start (also forgot to mention other ideas off the top of my head during meeting)-->
+
+
+
 <!-- if reminders/ notifications are desired or not like an alarm that prompts you to get a doodle in-->
 3. [ ] 
 
