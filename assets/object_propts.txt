@@ -24,12 +24,20 @@ nature
 --maple
 --oak
 --tulip 
+
 -tree 
+--birch
+--oak
+--tulip
 -bush
 -hedge
 
 animal
 -cat
+-cow
+-squirel (definetly very misspelled)
+-fish
+
 
 food
 -fruit
@@ -49,6 +57,13 @@ food
 --pineapple
 -dessert
 -pie
+-pumkin
+-squash
+-zuccini
+-carrot
+-tomato
+-radish
+
 -cake
 -muffin
 -cupcake
@@ -65,3 +80,17 @@ food
 -song lyrics (like literal description)
 -arrow (and bow)
 -quiver full of arrows
+
+-rock
+--geode
+--crystal
+--pebble
+--boulder
+--gravel
+--fossil
+--cliff face
+--mineral
+--molten lava
+--cooled lava
+--seabed
+--
