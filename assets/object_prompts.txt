@@ -34,6 +34,8 @@ nature
 -hedge
 -mushrooms
 -seaweed
+-vines
+
 
 
 animal
@@ -52,8 +54,20 @@ animal
 -monkey
 -lion
 -tiger
+-leopard
+-snow leopard
 -panther
--dessert
+-dingo
+-wombat
+-kangaroo
+-cobra
+-tornado
+-dinosaur
+-llama
+-alpaca
+-duck
+-goose
+-goat
 -moose
 -rabbit
 -bunny
@@ -62,6 +76,11 @@ animal
 --robin
 --blue jay
 --falcon
+--parrot
+--cockatoo
+--eagle
+--egg
+--flamingo
 -bat
 -spider
 -tarantula
@@ -87,6 +106,20 @@ animal
 -orca
 -frog
 -tadpole
+-fox
+-mole 
+-ape 
+-bugs
+-ladybug
+-beetle
+-scarab
+-praying mantis
+-sea ray 
+-shrimp
+-clam
+-crayfish
+-lobster
+-horseshoe crab
 
 
 food
@@ -125,7 +158,12 @@ food
 -cake
 -muffin
 -cupcake
--rice cake 
+-rice cake
+-waffle
+-pancake
+-cinnomonroll
+-bun 
+- 
 
 -wrapped present
 -ribon
@@ -142,6 +180,20 @@ food
 -rainbow
 -cloud
 -tornado
+-horseshoe
+-shoe
+--boot
+--sneaker
+--flip flop
+--sandal
+--slipper
+--
+-table
+-animal burrow
+-snowflake
+-snowman/snow person
+-snow angel
+-footprints/ tracks in snow
 -wave
 -song lyrics (like literal description)
 -arrow (and bow)
