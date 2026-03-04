@@ -16,7 +16,8 @@ nature
 --dandilion
 --cherry blossom
 -herbs
---
+--mint
+--lavender
 -garden
 
 -leaf
@@ -31,12 +32,61 @@ nature
 --tulip
 -bush
 -hedge
+-mushrooms
+-seaweed
+
 
 animal
 -cat
 -cow
 -squirel (definetly very misspelled)
 -fish
+-dog
+-lizard
+-gecko
+-salamander
+-axolotl
+-snake
+-sheep
+-horse
+-monkey
+-lion
+-tiger
+-panther
+-dessert
+-moose
+-rabbit
+-bunny
+-bird
+--hawk
+--robin
+--blue jay
+--falcon
+-bat
+-spider
+-tarantula
+-butterfly
+-moth
+-racoon
+-opossom
+-possom
+-crab
+-squid
+-eel 
+-octopus
+-shark
+-whale
+-whale-shark
+-bear 
+--panda
+--black bear
+--brown bear 
+--polar bear
+-koala
+-dolphin
+-orca
+-frog
+-tadpole
 
 
 food
@@ -44,6 +94,7 @@ food
 --cherry
 --apple
 --watermelon
+--cantaloupe
 --strawberry
 --orange
 --grape
@@ -55,6 +106,8 @@ food
 --blueberry
 --banana
 --pineapple
+--madarin orange
+--
 -dessert
 -pie
 -pumkin
@@ -63,6 +116,11 @@ food
 -carrot
 -tomato
 -radish
+-lettuce
+-spinach
+-mushrooms
+-onion
+
 
 -cake
 -muffin
@@ -76,10 +134,33 @@ food
 -confetti
 -streamers
 -disco ball
-- 
+-fairy
+-mermaid
+-siren
+-angel
+-devil
+-rainbow
+-cloud
+-tornado
+-wave
 -song lyrics (like literal description)
 -arrow (and bow)
 -quiver full of arrows
+-towel
+-book
+-bookcase
+-statue (can make it of anything just make it looke rockish)
+-vase
+-jar
+-cup 
+-mug
+-coffee
+--espresso
+--latte art
+--coffee beans
+--teabag
+--dried tea leaves
+
 
 -rock
 --geode
@@ -94,3 +175,30 @@ food
 --cooled lava
 --seabed
 --
+
+-stove
+-oven
+-whisk
+-spatula
+-spoon
+-butter knife
+-napkin
+-hankerchief
+-tissue box
+-paper towels
+-pan 
+-bowl
+-plate
+-tongs
+
+-eye
+-lips (with or without piercings)
+-eyebrow (with or without piercings)
+-eyelashes
+-nose (with or without piercings)
+-ears (with or without earrings)
+-arms
+-legs
+-torso
+-hand (with or without rings/ scars/ manicure/)
+-tattoo on a body part
