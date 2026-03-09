@@ -6,12 +6,12 @@
 
 <!--Will need to potentially use a user database to keep a library unique to each user -->
 
-1. [ ] User should be prompted to sign in
+1. User should be prompted to sign in
 
 
 <!-- goal that is in terms of end of week total time or goal that is in terms of time per day-->
 <!-- goal widget could still keep track of goal in both daily and end of week version-->
-2. [ ] Prompted to enter desired amount of time (total) to spend drawing for the week or the desired amount of time to spend drawing per day.
+2. User is prompted to enter desired amount of time (total) to spend drawing for the week or the desired amount of time to spend drawing per day.
 
 
 <!-- where ed said to start (also forgot to mention other ideas off the top of my head during meeting)-->
