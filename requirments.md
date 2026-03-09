@@ -3,7 +3,7 @@
 I used because I was a lil confused on the purpose of this document-->
 
 # Directions to Gemini
-- Generate tests for each requirement
+- Generate seperate tests for each requirement
 
 # App Requirments Document
 
