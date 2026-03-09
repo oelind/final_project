@@ -46,5 +46,7 @@ orientation/ )-->
 <!--At end of week give user summary on number of drawings/ avg amount of time spent on each drawing/ if prompts from lift were used/
 if prompt generator button was pressed-->
 
+<!--add test for each requirment-->
+
 
 <!---->
