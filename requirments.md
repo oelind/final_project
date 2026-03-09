@@ -1,5 +1,5 @@
 <!-- required for this project-->
-
+<!--https://blog.devops.dev/is-requirements-txt-essential-for-developers-using-python-4cdcf00a8fb2 this is a source I used because I was a lil confused on the purpose of this document-->
 # App Requirments Document
 
 ## features
