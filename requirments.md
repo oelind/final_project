@@ -1,6 +1,10 @@
 <!-- required for this project-->
 <!--https://blog.devops.dev/is-requirements-txt-essential-for-developers-using-python-4cdcf00a8fb2 this is a source 
 I used because I was a lil confused on the purpose of this document-->
+
+# Directions to Gemini
+
+
 # App Requirments Document
 
 ## features
@@ -28,6 +32,7 @@ I used because I was a lil confused on the purpose of this document-->
 
 
 <!-- if reminders are desired then the amount that is okay from a range of like a single reminder at a specific time to say one reminder every 2 hours if a log is not made by a specific time/ if goal amount is not reached by a specific time (like noon)-->
+5. For settings of reminders (if any are desired) selected like the 
 
 <!--This data is saved to the user specific library and variables -->
 
