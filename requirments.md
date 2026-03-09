@@ -1,5 +1,6 @@
 <!-- required for this project-->
-<!--https://blog.devops.dev/is-requirements-txt-essential-for-developers-using-python-4cdcf00a8fb2 this is a source I used because I was a lil confused on the purpose of this document-->
+<!--https://blog.devops.dev/is-requirements-txt-essential-for-developers-using-python-4cdcf00a8fb2 this is a source 
+I used because I was a lil confused on the purpose of this document-->
 # App Requirments Document
 
 ## features
@@ -19,7 +20,7 @@
 
 
 <!-- if reminders/ notifications are desired or not like an alarm that prompts you to get a doodle in-->
-3. [ ] 
+3. Store if the user would like to recieve notifications that are reminders to work towards fufilling their goal
 
 
 <!-- if reminders are desired then the amount that is okay from a range of like a single reminder at a specific time to say one reminder every 2 hours if a log is not made by a specific time/ if goal amount is not reached by a specific time (like noon)-->
