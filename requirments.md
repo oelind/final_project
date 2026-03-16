@@ -14,7 +14,7 @@ I used because I was a lil confused on the purpose of this document-->
 
 <!--Will need to potentially use a user database to keep a library unique to each user -->
 
-1. Create a log in screen that .
+1. Create a log in screen that has the options for the user to log into the tracker or to create an account.
 
 
 <!-- goal that is in terms of end of week total time or goal that is in terms of time per day-->
