@@ -5,7 +5,9 @@
 3. [x] create a seperate screen that after the user's login info is verified in the user database is where the user lands after successfully logging in named the home screen. Add a Scaffold, a ListView, two hardcoded drawing cards with details about the drawing like what was drawn/ color(s) used/ mediums used/ size/ effort amount put in/ ect. Each card should have a time stamp and have the amount of time the user spent on making the drawing.
 
 
-4. [ ] Modify the login page so it authenticates the text entered and then goes to the home page once all of the information is successfully verified.
+4. [ ] Add tests to verify that the login page authenticates the text entered and then goes to the homepage.
+
+5. [ ] Modify the login page so it authenticates the text entered and then goes to the home page once all of the information is successfully verified. 
 
 
 
