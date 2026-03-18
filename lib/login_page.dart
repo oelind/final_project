@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'services/mock_data.dart';
 import 'home_screen.dart';
+import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -94,6 +95,15 @@ class _LoginPageState extends State<LoginPage> {
                   'Login',
                   style: TextStyle(fontSize: 18),
                 ),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const SignUpPage()),
+                  );
+                },
+                child: const Text('Don\'t have an account? Create one'),
               ),
             ],
           ),
