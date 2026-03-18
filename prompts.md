@@ -7,7 +7,7 @@
 
 4. [x] Add tests to verify that the login page authenticates the text entered and then goes to the homepage.
 
-5. [ ] Modify the login page so it authenticates the text entered and then goes to the home page once all of the information is successfully verified. 
+5. [x] Modify the login page so it authenticates the text entered and then goes to the home page once all of the information is successfully verified. 
 
 
 

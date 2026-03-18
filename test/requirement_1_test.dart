@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/main.dart';
-import 'package:final_project/signup_page.dart';
 
 void main() {
   testWidgets('Requirement 1: Login screen has option to create an account', (WidgetTester tester) async {

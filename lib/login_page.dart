@@ -15,8 +15,18 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    final email = _emailController.text;
+    final email = _emailController.text.trim();
     final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter both email and password.'),
+          backgroundColor: Colors.orangeAccent,
+        ),
+      );
+      return;
+    }
 
     try {
       final user = MockData.users.firstWhere(
