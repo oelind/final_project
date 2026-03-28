@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:final_project/main.dart';
+import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 

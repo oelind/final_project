@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:final_project/main.dart';
+import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 void main() {

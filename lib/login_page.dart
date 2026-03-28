@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_screen.dart';
 import 'signup_page.dart';
+import 'services/login_user.dart';
 
 class LoginPage extends StatefulWidget {
   final FirebaseAuth? auth;
@@ -39,13 +40,14 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
+      final userCredential = await loginUser(
+        auth: _auth,
         email: email,
         password: password,
       );
       
-      if (userCredential.user != null) {
-        debugPrint('Login successful for: ${userCredential.user?.email}');
+      if (userCredential?.user != null) {
+        debugPrint('Login successful for: ${userCredential?.user?.email}');
         if (mounted) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

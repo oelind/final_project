@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'services/signup_user.dart';
 
 class SignUpPage extends StatefulWidget {
   final FirebaseAuth? auth;
@@ -43,13 +44,14 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
+      final userCredential = await signupUser(
+        auth: _auth,
         email: email,
         password: password,
       );
       
-      if (userCredential.user != null) {
-        debugPrint('Account created for: ${userCredential.user?.email}');
+      if (userCredential?.user != null) {
+        debugPrint('Account created for: ${userCredential?.user?.email}');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Account created successfully! Please login.')),
