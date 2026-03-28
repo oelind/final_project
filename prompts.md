@@ -12,7 +12,7 @@
 6. [x] Instead of using mock data inside the current project use the data in the linked firebase project. Fix the already existing code so it all actually works based on requirment 1 in the requirements.md file and passes all the tests in requirment_1_test.dart file. Also eliminate any files that are duplicates/ are redundant in terms of their purpose and if there are redundant files keep the single file that follow the previuos prompts.
 
 
-7. [ ] Check that all tests are passed especially the ones using the data from drawinglog-oaks-sye-sp26 specifically via the user certification part of that project. 
+7. [x] Check that all tests are passed especially the ones using the data from drawinglog-oaks-sye-sp26 specifically via the user certification part of that project. 
 
 
 
