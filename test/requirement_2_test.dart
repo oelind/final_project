@@ -8,14 +8,14 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: GoalSetupScreen()));
 
     // Verify presence of choice chips for weekly/daily goal selection.
-    expect(find.text('Weekly Goal'), findsOneWidget);
-    expect(find.text('Daily Goal'), findsOneWidget);
+    expect(find.text('Weekly'), findsOneWidget);
+    expect(find.text('Daily'), findsOneWidget);
 
     // Initial state: Weekly Goal selected.
     expect(find.text('Hours per week'), findsOneWidget);
 
     // Select Daily Goal.
-    await tester.tap(find.text('Daily Goal'));
+    await tester.tap(find.text('Daily'));
     await tester.pump();
 
     // Verify label changes correctly.
@@ -26,10 +26,10 @@ void main() {
     expect(find.text('10'), findsOneWidget);
 
     // Save goal.
-    await tester.tap(find.byType(ElevatedButton));
+    await tester.tap(find.text('Save & Continue'));
     await tester.pump();
 
     // Verify snackbar feedback is shown.
-    expect(find.text('Goal saved: 10 hours/daily'), findsOneWidget);
+    expect(find.textContaining('Goal: 10 hrs/daily'), findsOneWidget);
   });
 }

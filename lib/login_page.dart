@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'services/mock_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_screen.dart';
 import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final FirebaseAuth? auth;
+  final FirebaseFirestore? firestore;
+  const LoginPage({super.key, this.auth, this.firestore});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,8 +16,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late final FirebaseAuth _auth;
 
-  void _login() {
+  @override
+  void initState() {
+    super.initState();
+    _auth = widget.auth ?? FirebaseAuth.instance;
+  }
+
+  Future<void> _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
@@ -29,24 +39,62 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      final user = MockData.users.firstWhere(
-        (u) => u.email == email && u.password == password,
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
       
-      // If user is found, navigate to home screen
-      debugPrint('Login successful for: ${user.email}');
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+      if (userCredential.user != null) {
+        debugPrint('Login successful for: ${userCredential.user?.email}');
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                auth: _auth,
+                firestore: widget.firestore,
+              ),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login failed. Please check your credentials.'),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      debugPrint('Login failed for: $email - ${e.code}');
+      String message = 'Invalid email or password.';
+      if (e.code == 'user-not-found') {
+        message = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        message = 'Wrong password provided for that user.';
+      } else if (e.code == 'invalid-email') {
+        message = 'The email address is badly formatted.';
+      }
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
     } catch (e) {
-      // If user is not found, show error message
-      debugPrint('Login failed for: $email');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password.'),
-          backgroundColor: Colors.redAccent,
-        ),
-      );
+      debugPrint('An error occurred during login: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('An unexpected error occurred. Please try again.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
     }
   }
 
@@ -110,7 +158,12 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
+                    MaterialPageRoute(
+                      builder: (context) => SignUpPage(
+                        auth: widget.auth,
+                        firestore: widget.firestore,
+                      ),
+                    ),
                   );
                 },
                 child: const Text('Don\'t have an account? Create one'),
