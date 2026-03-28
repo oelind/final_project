@@ -15,6 +15,8 @@
 7. [x] Check that all tests are passed especially the ones using the data from drawinglog-oaks-sye-sp26 specifically via the user certification part of that project. 
 
 
+8. [ ] Check that all tests for all requirments in requirments.md are passed and if any tests are failed fix the code responsible. Also ensure only one function per files in the library and move any others to new files in the approriate folders. Make seperate git commits with changes made to code relating to a single requirment.
+
 
 
 
