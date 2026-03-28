@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'models/drawing.dart';
 import 'widgets/drawing_card.dart';
+import 'services/signout_user.dart';
 
 class HomeScreen extends StatelessWidget {
   final FirebaseFirestore? firestore;
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              await effectiveAuth.signOut();
+              await signoutUser(effectiveAuth);
               if (context.mounted) {
                 Navigator.of(context).pop();
               }
