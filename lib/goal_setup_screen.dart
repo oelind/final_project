@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'services/save_settings.dart';
 
 class GoalSetupScreen extends StatefulWidget {
   const GoalSetupScreen({super.key});
@@ -14,34 +15,6 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
   // Notification settings (Requirements 3 & 4)
   bool wantNotifications = false;
   String reminderFrequency = 'Daily'; // Default frequency
-
-  void _saveSettings() {
-    if (_timeController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a time goal')),
-      );
-      return;
-    }
-
-    final goalType = isWeeklyGoal ? 'weekly' : 'daily';
-    debugPrint('Goal set: ${_timeController.text} hours per $goalType');
-    debugPrint('Notifications: $wantNotifications');
-    if (wantNotifications) {
-      debugPrint('Reminder Frequency: $reminderFrequency');
-    }
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Settings saved! Goal: ${_timeController.text} hrs/$goalType. '
-          'Notifications: ${wantNotifications ? 'On ($reminderFrequency)' : 'Off'}'
-        ),
-      ),
-    );
-    
-    // After saving, go to the home screen or pop
-    Navigator.of(context).pop(); 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +110,13 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
               ],
               const SizedBox(height: 48),
               ElevatedButton(
-                onPressed: _saveSettings,
+                onPressed: () => saveSettings(
+                  context: context,
+                  timeGoal: _timeController.text,
+                  isWeeklyGoal: isWeeklyGoal,
+                  wantNotifications: wantNotifications,
+                  reminderFrequency: reminderFrequency,
+                ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
