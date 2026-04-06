@@ -33,13 +33,13 @@ I used because I was a lil confused on the purpose of this document-->
 <!-- if reminders are desired then the amount that is okay from a range of like a single reminder at a specific time to say one reminder every 2 hours if a log is not made by a specific time/ if goal amount is not reached by a specific time (like noon)-->
 4. For settings of reminders (if any are desired) selected like the 
 
-<!--This data is saved to the user specific library and variables -->
+5. The user responses/ data is stored in a user specific local library a via the account they have set up.
 
 
 <!-- what happen if reminder/ notification clicked on: user could be asked if they need to log a drawing that they forgot to log earlier or to start the log at that moment-->
 
 
-<!--widget that is updated after every log entry for the goal that is displayed near log-->
+idget that is updated after every log entry for the goal that is displayed near log-->
 
 <!--If end of week for user is sunday or monday-->
 
