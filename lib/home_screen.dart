@@ -34,6 +34,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Drawing Log'),
         actions: [
+          //pop up menu for signing out, editing goal (will try to add a new page
+          //to have a page to edit goal instead of just having the initial setting up
+          //page), or editing the notifications settings
           PopupMenuButton<String>(
             icon: const Icon(Icons.settings),
             onSelected: (value) async {
@@ -42,6 +45,9 @@ class HomeScreen extends StatelessWidget {
                 if (context.mounted) {
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 }
+                //will create seperate statments for the goal and notifications
+              //currently when goal or notifications are selected the app goes to the initial goal
+              //set up screen
               } else if (value == 'goal' || value == 'notifications') {
                 if (context.mounted) {
                   Navigator.of(context).push(
