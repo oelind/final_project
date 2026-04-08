@@ -117,7 +117,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                 const Text('Reminder Frequency:', style: TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
-                  value: reminderFrequency,
+                  initialValue: reminderFrequency,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),

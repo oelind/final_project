@@ -58,6 +58,9 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     }
   }
 
+// function responsible for saving drawing log entries
+//but with my mannual testing after the home page is left the 
+//log entries are not saved yet
   Future<void> _saveEntry() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -80,21 +83,25 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
+//case of a drawing log being successfully saved
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Drawing logged successfully!')),
         );
-      }
-    } catch (e) {
-      if (mounted) {
+      }//end of succeess saving if statment
+      //case of if there was an error saving a drawing log
+    } //end of try/ end of case for successfully saving a log entry
+    catch (e) {
+      if (!mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error logging drawing: $e')),
         );
-      }
+      }//end of if statment for not properly saved case
     }
   }
 
+//This is the widget for creating a drawing log
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -106,15 +113,18 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              //controls the title of the log entry
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(labelText: 'Title (Optional)'),
-              ),
-              const SizedBox(height: 12),
+              ), //end of entry title field
+              const SizedBox(height: 12), //space between fields of the form
+              //where user enters the amount of time they spent of the drawing either manually
+              //or by using the timer function 
               TextFormField(
                 controller: _timeController,
                 decoration: InputDecoration(
-                  labelText: 'Time Spent (Hours)',
+                  labelText: 'Time Spent (Minutes)',
                   suffixIcon: IconButton(
                     icon: Icon(_isTimerRunning ? Icons.stop : Icons.play_arrow),
                     color: _isTimerRunning ? Colors.red : Colors.green,
@@ -123,12 +133,15 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                 ),
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 validator: (value) => (value == null || value.isEmpty) ? 'Required' : null,
-              ),
+              ), //End of section of form for a log entry for time spent on the drawing
+
+              //case of when the function for recording a drawing in realtime/ live
               if (_isTimerRunning)
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
+                  //shows the amount of time that has passed since the timer was started
                   child: Text(
-                    'Timer active: ${(_secondsElapsed ~/ 60)}m ${(_secondsElapsed % 60)}s',
+                    'Timer active: ${(_secondsElapsed ~/ 60)}m ${(_secondsElapsed ~/ 60)}s',
                     style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -141,7 +154,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                value: _effort,
+                initialValue: _effort,
                 decoration: const InputDecoration(labelText: 'Effort Level'),
                 items: ['Low', 'Medium', 'High']
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -152,29 +165,46 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(labelText: 'Description (Optional)'),
-                maxLines: 2,
+                maxLines: 4,
               ),
             ],
           ),
         ),
       ),
+
+
       actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      //buttons for saving a drawing entry or not saving the started
+      //entry
       actions: [
+        //discarding started entry button
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
+
+        //saving entry button
+        ElevatedButton(
+          onPressed: dispose,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Colors.orangeAccent,
+          ), //end of style for save button
+          child: const Text('Clear fields'),
+        ),
+
+        //saving entry button
         ElevatedButton(
           onPressed: _saveEntry,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Colors.white,
-          ),
-          child: const Text('Finished'),
+          ), //end of style for save button
+          child: const Text('Save'),
         ),
-      ],
+      ], //end of actions list
     );
-  }
+  } //end of build widget
 
   @override
   void dispose() {
@@ -183,5 +213,5 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     _descriptionController.dispose();
     _timeController.dispose();
     super.dispose();
-  }
+  } //end of dispose function
 }

@@ -111,6 +111,8 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //currently default is no drawing logged yet state
+                        //and seems hardcoded
                         const Text(
                           'No drawings logged yet.',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
