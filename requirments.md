@@ -35,7 +35,7 @@ I used because I was a lil confused on the purpose of this document-->
 
 5. After the user signs into their account they are sent to a home screen that displays all of their past drawing entires (if any). If there are no drawing log entries yet in the center of the middle of the screen a button that says record your first entry gives the user the opportunity to log how long they spent on said drawing, when they made the drawing (default being the current date), how much effort they put into it (with the default being medium), and after all that information is entered after they hit a button in the bottom right hand corner of the popup the user is currently in titled finished that then records all the user inputed data and assigns a timestamp of when the finished button was pressed.
 
-6.  Also there are buttons in the bottom right hand corner of the scree
+6.  Also there are buttons in the bottom right hand corner of the home screen where the user can log drawings.
 
 7. The user responses/ data is stored in a user specific local library a via the account they have set up.
 
