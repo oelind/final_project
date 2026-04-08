@@ -14,7 +14,31 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
   
   // Notification settings (Requirements 3 & 4)
   bool wantNotifications = false;
-  String reminderFrequency = 'Daily'; // Default frequency
+  String reminderFrequency = 'Daily';
+  TimeOfDay reminderStartTime = const TimeOfDay(hour: 12, minute: 0); // Default Noon
+  TimeOfDay reminderEndTime = const TimeOfDay(hour: 0, minute: 0); // Default Midnight
+
+  Future<void> _selectTime(BuildContext context, bool isStart) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: isStart ? reminderStartTime : reminderEndTime,
+    );
+    if (picked != null) {
+      setState(() {
+        if (isStart) {
+          reminderStartTime = picked;
+        } else {
+          reminderEndTime = picked;
+        }
+      });
+    }
+  }
+
+  String _formatTime(TimeOfDay time) {
+    final hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
+    final period = time.period == DayPeriod.am ? 'AM' : 'PM';
+    return '$hour:${time.minute.toString().padLeft(2, '0')} $period';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +93,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                   border: const OutlineInputBorder(),
                   suffixText: 'hours',
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
               ),
               const SizedBox(height: 40),
               const Divider(),
@@ -93,7 +117,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                 const Text('Reminder Frequency:', style: TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
-                  initialValue: reminderFrequency,
+                  value: reminderFrequency,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
@@ -107,6 +131,38 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                     }
                   },
                 ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Start Time:', style: TextStyle(fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 8),
+                          OutlinedButton(
+                            onPressed: () => _selectTime(context, true),
+                            child: Text(_formatTime(reminderStartTime)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Latest Time:', style: TextStyle(fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 8),
+                          OutlinedButton(
+                            onPressed: () => _selectTime(context, false),
+                            child: Text(_formatTime(reminderEndTime)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ],
               const SizedBox(height: 48),
               ElevatedButton(
@@ -116,6 +172,8 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                   isWeeklyGoal: isWeeklyGoal,
                   wantNotifications: wantNotifications,
                   reminderFrequency: reminderFrequency,
+                  reminderStartTime: _formatTime(reminderStartTime),
+                  reminderEndTime: _formatTime(reminderEndTime),
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),

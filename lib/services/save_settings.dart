@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void saveSettings({
+Future<void> saveSettings({
   required BuildContext context,
   required String timeGoal,
   required bool isWeeklyGoal,
   required bool wantNotifications,
   required String reminderFrequency,
-}) {
+  String? reminderStartTime,
+  String? reminderEndTime,
+  FirebaseAuth? auth,
+  FirebaseFirestore? firestore,
+}) async {
   if (timeGoal.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Please enter a time goal')),
@@ -14,21 +20,45 @@ void saveSettings({
     return;
   }
 
-  final goalType = isWeeklyGoal ? 'weekly' : 'daily';
-  debugPrint('Goal set: $timeGoal hours per $goalType');
-  debugPrint('Notifications: $wantNotifications');
-  if (wantNotifications) {
-    debugPrint('Reminder Frequency: $reminderFrequency');
+  final effectiveAuth = auth ?? FirebaseAuth.instance;
+  final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
+  final user = effectiveAuth.currentUser;
+
+  if (user == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not logged in')),
+    );
+    return;
   }
-  
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        'Settings saved! Goal: $timeGoal hrs/$goalType. '
-        'Notifications: ${wantNotifications ? 'On ($reminderFrequency)' : 'Off'}'
-      ),
-    ),
-  );
-  
-  Navigator.of(context).pop(); 
+
+  try {
+    await effectiveFirestore.collection('users').doc(user.uid).set({
+      'settings': {
+        'timeGoal': double.tryParse(timeGoal) ?? 0.0,
+        'isWeeklyGoal': isWeeklyGoal,
+        'wantNotifications': wantNotifications,
+        'reminderFrequency': reminderFrequency,
+        'reminderStartTime': reminderStartTime ?? '12:00 PM',
+        'reminderEndTime': reminderEndTime ?? '12:00 AM',
+      }
+    }, SetOptions(merge: true));
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Settings saved! Goal: $timeGoal hrs/${isWeeklyGoal ? 'weekly' : 'daily'}. '
+            'Notifications: ${wantNotifications ? 'On ($reminderFrequency)' : 'Off'}'
+          ),
+        ),
+      );
+      Navigator.of(context).pop();
+    }
+  } catch (e) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving settings: $e')),
+      );
+    }
+  }
 }
