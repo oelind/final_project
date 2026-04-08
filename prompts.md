@@ -18,6 +18,9 @@
 8. [x] Check that all tests for all requirments in requirments.md are passed and if any tests are failed fix the code responsible. Also ensure only one function per files in the library and move any others to new files in the approriate folders. Make seperate git commits with changes made to code relating to a single requirment.
 
 
+9. [ ] The requirments have been updated/ added to please check that the code fufills all of the requirments and passes all of the tests. Also please make tests to make sure there is a functioning user interface/ buttons actually work properly for user. Also please make sure there are buttons when they are appropriate.
+
+
 
 
 ** Development Rules **
