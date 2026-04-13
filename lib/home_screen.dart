@@ -29,7 +29,8 @@ class HomeScreen extends StatelessWidget {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
     final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
     final user = effectiveAuth.currentUser;
-
+// shows all entries logged for drawings by the user and offers thhem to start a new
+//log entry
     return Scaffold(
       appBar: AppBar(
         title: const Text('Drawing Log'),
