@@ -44,15 +44,28 @@ Future<void> saveSettings({
     }, SetOptions(merge: true));
 
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+      // Show success popup (Requirement 12)
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Goal Saved'),
           content: Text(
-            'Settings saved! Goal: $timeGoal hrs/${isWeeklyGoal ? 'weekly' : 'daily'}. '
-            'Notifications: ${wantNotifications ? 'On ($reminderFrequency)' : 'Off'}'
+            'You were able to successfully create a goal that was saved!\n\n'
+            'Goal: $timeGoal hrs/${isWeeklyGoal ? 'weekly' : 'daily'}.'
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
         ),
       );
-      Navigator.of(context).pop();
+
+      if (context.mounted) {
+        // After dialog is dismissed, go back to Home Screen
+        Navigator.of(context).pop();
+      }
     }
   } catch (e) {
     if (context.mounted) {

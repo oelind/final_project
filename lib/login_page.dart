@@ -23,6 +23,20 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _auth = widget.auth ?? FirebaseAuth.instance;
+    
+    // Check for existing session
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_auth.currentUser != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              auth: _auth,
+              firestore: widget.firestore,
+            ),
+          ),
+        );
+      }
+    });
   }
 
   Future<void> _login() async {

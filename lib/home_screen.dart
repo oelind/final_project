@@ -61,7 +61,12 @@ class HomeScreen extends StatelessWidget {
               } else if (value == 'goal' || value == 'notifications') {
                 if (context.mounted) {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const GoalSetupScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => GoalSetupScreen(
+                        auth: effectiveAuth,
+                        firestore: effectiveFirestore,
+                      ),
+                    ),
                   );
                 }
               }

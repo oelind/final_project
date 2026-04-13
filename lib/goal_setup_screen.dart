@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'services/save_settings.dart';
 
 class GoalSetupScreen extends StatefulWidget {
-  const GoalSetupScreen({super.key});
+  final FirebaseAuth? auth;
+  final FirebaseFirestore? firestore;
+
+  const GoalSetupScreen({super.key, this.auth, this.firestore});
 
   @override
   State<GoalSetupScreen> createState() => _GoalSetupScreenState();
@@ -174,6 +179,8 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                   reminderFrequency: reminderFrequency,
                   reminderStartTime: _formatTime(reminderStartTime),
                   reminderEndTime: _formatTime(reminderEndTime),
+                  auth: widget.auth,
+                  firestore: widget.firestore,
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
