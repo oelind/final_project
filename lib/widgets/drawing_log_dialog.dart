@@ -61,9 +61,19 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     }
   }
 
+  void _clearFields() {
+    setState(() {
+      _titleController.clear();
+      _descriptionController.clear();
+      _timeController.clear();
+      _secondsElapsed = 0;
+      _isTimerRunning = false;
+      _timer?.cancel();
+    });
+  }
+
 // function responsible for saving drawing log entries
-//but with my mannual testing after the home page is left the 
-//log entries are not saved yet
+// Drawing log entries are saved to Firestore and persist between sessions.
   Future<void> _saveEntry() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -73,7 +83,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
 
     if (user == null) return;
 
-    final timeInMinutes = (double.tryParse(_timeController.text) ?? 0.0) * 60;
+    final timeInMinutes = double.tryParse(_timeController.text) ?? 0.0;
 
     try {
       await effectiveFirestore.collection('drawings').add({
@@ -96,10 +106,10 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
       //case of if there was an error saving a drawing log
     } //end of try/ end of case for successfully saving a log entry
     catch (e) {
-      if (!mounted) {
-        
-          SnackBar(content: Text('Error logging drawing: $e'));
-        //);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error logging drawing: $e')),
+        );
       }//end of if statment for not properly saved case
     }
   }
@@ -193,7 +203,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
 
         //saving entry button
         ElevatedButton(
-          onPressed: dispose,
+          onPressed: _clearFields,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Colors.orangeAccent,

@@ -61,7 +61,7 @@ void main() {
 
     // Check initial fields
     expect(find.text('Log Your Drawing'), findsOneWidget);
-    expect(find.text('Time Spent (Hours)'), findsOneWidget);
+    expect(find.text('Time Spent (Minutes)'), findsOneWidget);
 
     // Test Timer button
     final timerButton = find.byIcon(Icons.play_arrow);
@@ -73,9 +73,9 @@ void main() {
 
     // Enter data and save
     await tester.enterText(find.widgetWithText(TextFormField, 'Title (Optional)'), 'My Masterpiece');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Time Spent (Hours)'), '1.5');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Time Spent (Minutes)'), '90');
     
-    await tester.tap(find.text('Finished'));
+    await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
     // Verify drawing is in Firestore

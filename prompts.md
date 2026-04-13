@@ -20,7 +20,7 @@
 
 9. [x] The requirments have been updated/ added to please check that the code fufills all of the requirments and passes all of the tests. Also please make tests to make sure there is a functioning user interface/ buttons actually work properly for user. Also please make sure there are buttons when they are appropriate.
 
-10. [ ] Please check that drawing log entries can be saved between user logins or even between page switches and create tests to verify drawing log entries are successfully saved by default.
+10. [x] Please check that drawing log entries can be saved between user logins or even between page switches and create tests to verify drawing log entries are successfully saved by default.
 
 
 

@@ -7,6 +7,7 @@ import 'widgets/goal_progress_widget.dart';
 import 'widgets/drawing_log_dialog.dart';
 import 'services/signout_user.dart';
 import 'goal_setup_screen.dart';
+import 'login_page.dart';
 
 class HomeScreen extends StatelessWidget {
   final FirebaseFirestore? firestore;
@@ -44,7 +45,15 @@ class HomeScreen extends StatelessWidget {
               if (value == 'signout') {
                 await signoutUser(effectiveAuth);
                 if (context.mounted) {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(
+                        auth: auth,
+                        firestore: firestore,
+                      ),
+                    ),
+                    (route) => false,
+                  );
                 }
                 //will create seperate statments for the goal and notifications
               //currently when goal or notifications are selected the app goes to the initial goal
