@@ -28,6 +28,8 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
   int _secondsElapsed = 0;
   Timer? _timer;
 
+//function that controls if the the timer for a live drawing log entry
+//is toggled on or off
   void _toggleTimer() {
     setState(() {
       _isTimerRunning = !_isTimerRunning;
@@ -44,6 +46,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     });
   }
 
+//function for the date selector of the drawing entry
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -94,19 +97,20 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     } //end of try/ end of case for successfully saving a log entry
     catch (e) {
       if (!mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error logging drawing: $e')),
-        );
+        
+          SnackBar(content: Text('Error logging drawing: $e'));
+        //);
       }//end of if statment for not properly saved case
     }
   }
 
-//This is the widget for creating a drawing log
+//This is the widget for creating a drawing log entry
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Log Your Drawing'),
       content: SingleChildScrollView(
+        //the form part of the drawing entry where all the info is entered
         child: Form(
           key: _formKey,
           child: Column(
@@ -147,12 +151,15 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                 ),
               const SizedBox(height: 12),
               ListTile(
+                //where the date the drawing was complete can be entered
+                //and the default date is the current date
                 title: Text('Date: ${DateFormat('yyyy-MM-dd').format(_selectedDate)}'),
                 trailing: const Icon(Icons.calendar_today),
                 onTap: () => _selectDate(context),
                 contentPadding: EdgeInsets.zero,
               ),
               const SizedBox(height: 12),
+              //where user selects the amount of effort they put into what they drew
               DropdownButtonFormField<String>(
                 initialValue: _effort,
                 decoration: const InputDecoration(labelText: 'Effort Level'),
@@ -162,6 +169,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                 onChanged: (val) => setState(() => _effort = val!),
               ),
               const SizedBox(height: 12),
+              //where user enters an optional description of what they drew
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(labelText: 'Description (Optional)'),
@@ -206,6 +214,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     );
   } //end of build widget
 
+//essentially a clear button (I think)
   @override
   void dispose() {
     _timer?.cancel();
