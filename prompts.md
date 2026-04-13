@@ -26,6 +26,9 @@
 11. [x] Fix the code for saving drawing log entries if tests are not passed until all the tests are passed.
 
 
+12. [ ] Create tests that verify users can successfully create and save their goal from the settings button. Also ensure that the user after having successfully created a goal they are then sent to the home page and notified from a pop up that they were able to sucessfully create a goal that was saved.
+
+
 ** Development Rules **
 
 1. Always commit the current code before implimenting a new feature that has a commit
