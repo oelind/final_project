@@ -23,6 +23,7 @@
 10. [x] Please check that drawing log entries can be saved between user logins or even between page switches and create tests to verify drawing log entries are successfully saved by default.
 
 
+11. [ ] Fix the code for saving drawing log entries if tests are not passed until all the tests are passed.
 
 
 ** Development Rules **
