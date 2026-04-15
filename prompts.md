@@ -32,7 +32,7 @@
 
 14. [x] Ensure that drawing log entries persist and are saved for a user's account even when the app has stopped running. Add unit tests to verify this and if the tests are not passed fix the code until the tests are passed (and check that the generated tests are appropriate after a certain amount of times of having specific tests failed repeatedly)
 
-15. [ ]
+15. [ ] Generate neccissary code to fufill requirment 11 and integrate firebase with this app. Then create unit tests for the code that an experienced quality assurance tester would create to test the generated code and that firebase is properly integrated with the app to store all the user data. Also ensure that tests are generated to ensure compatability with the rest of the code for the app and with other features and if any tests are failed fix the code until the failed tests are passed.
 
 16. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
 
