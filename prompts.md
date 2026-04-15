@@ -30,7 +30,7 @@
 
 13. [x] Do requirment 10 and create unit tests to make sure the button works.
 
-14. [ ] Ensure that drawing log entries persist and are saved for a user's account even when the app has stopped running. Add unit tests to verify this and if the tests are not passed fix the code until the tests are passed (and check that the generated tests are appropriate after a certain amount of times of having specific tests failed repeatedly)
+14. [x] Ensure that drawing log entries persist and are saved for a user's account even when the app has stopped running. Add unit tests to verify this and if the tests are not passed fix the code until the tests are passed (and check that the generated tests are appropriate after a certain amount of times of having specific tests failed repeatedly)
 
 ** Development Rules **
 
