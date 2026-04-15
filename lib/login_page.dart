@@ -8,7 +8,8 @@ import 'services/login_user.dart';
 class LoginPage extends StatefulWidget {
   final FirebaseAuth? auth;
   final FirebaseFirestore? firestore;
-  const LoginPage({super.key, this.auth, this.firestore});
+  final List<String>? initialPrompts;
+  const LoginPage({super.key, this.auth, this.firestore, this.initialPrompts});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -23,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _auth = widget.auth ?? FirebaseAuth.instance;
-    
+
     // Check for existing session
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_auth.currentUser != null) {
@@ -32,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             builder: (context) => HomeScreen(
               auth: _auth,
               firestore: widget.firestore,
+              initialPrompts: widget.initialPrompts,
             ),
           ),
         );
@@ -59,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
-      
+
       if (userCredential?.user != null) {
         debugPrint('Login successful for: ${userCredential?.user?.email}');
         if (mounted) {
@@ -68,11 +70,13 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context) => HomeScreen(
                 auth: _auth,
                 firestore: widget.firestore,
+                initialPrompts: widget.initialPrompts,
               ),
             ),
           );
         }
-      } else {
+      }
+ else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

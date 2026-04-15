@@ -13,8 +13,9 @@ import 'login_page.dart';
 class HomeScreen extends StatelessWidget {
   final FirebaseFirestore? firestore;
   final FirebaseAuth? auth;
+  final List<String>? initialPrompts;
   
-  const HomeScreen({super.key, this.firestore, this.auth});
+  const HomeScreen({super.key, this.firestore, this.auth, this.initialPrompts});
 
   void _showLogDialog(BuildContext context) {
     showDialog(
@@ -31,15 +32,11 @@ class HomeScreen extends StatelessWidget {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
     final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
     final user = effectiveAuth.currentUser;
-// shows all entries logged for drawings by the user and offers thhem to start a new
-//log entry
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Drawing Log'),
         actions: [
-          //pop up menu for signing out, editing goal (will try to add a new page
-          //to have a page to edit goal instead of just having the initial setting up
-          //page), or editing the notifications settings
           PopupMenuButton<String>(
             icon: const Icon(Icons.settings),
             onSelected: (value) async {
@@ -56,9 +53,6 @@ class HomeScreen extends StatelessWidget {
                     (route) => false,
                   );
                 }
-                //will create seperate statments for the goal and notifications
-              //currently when goal or notifications are selected the app goes to the initial goal
-              //set up screen
               } else if (value == 'goal' || value == 'notifications') {
                 if (context.mounted) {
                   Navigator.of(context).push(
@@ -124,37 +118,37 @@ class HomeScreen extends StatelessWidget {
                 final documents = snapshot.data?.docs ?? [];
                 if (documents.isEmpty) {
                   return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //currently default is no drawing logged yet state
-                        //and seems hardcoded
-                        const Text(
-                          'No drawings logged yet.',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton.icon(
-                          onPressed: () => _showLogDialog(context),
-                          icon: const Icon(Icons.add),
-                          label: const Text('Record your first entry'),
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'No drawings logged yet.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const PromptGeneratorWidget(),
-                      ],
+                          const SizedBox(height: 20),
+                          ElevatedButton.icon(
+                            onPressed: () => _showLogDialog(context),
+                            icon: const Icon(Icons.add),
+                            label: const Text('Record your first entry'),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          PromptGeneratorWidget(initialPrompts: initialPrompts),
+                        ],
+                      ),
                     ),
                   );
                 }
 
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: documents.length + 1, // Add 1 for the PromptGenerator
+                  itemCount: documents.length + 1,
                   itemBuilder: (context, index) {
                     if (index == documents.length) {
-                      return const PromptGeneratorWidget();
+                      return PromptGeneratorWidget(initialPrompts: initialPrompts);
                     }
                     final data = documents[index].data() as Map<String, dynamic>;
                     final drawing = Drawing.fromFirestore(data);

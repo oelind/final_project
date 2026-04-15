@@ -15,7 +15,11 @@ void main() {
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
 
     // Build the app
-    await tester.pumpWidget(DrawingLogApp(auth: mockAuth, firestore: mockFirestore));
+    await tester.pumpWidget(DrawingLogApp(
+      auth: mockAuth, 
+      firestore: mockFirestore,
+      initialPrompts: ['Test Prompt'],
+    ));
     await tester.pumpAndSettle();
 
     // 1. Open settings and select Edit Goal

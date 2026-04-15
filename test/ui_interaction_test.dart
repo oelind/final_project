@@ -28,7 +28,11 @@ void main() {
 
   testWidgets('Home Screen UI: Settings menu shows correct options', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: HomeScreen(auth: mockAuth, firestore: mockFirestore),
+      home: HomeScreen(
+        auth: mockAuth, 
+        firestore: mockFirestore,
+        initialPrompts: ['Test Prompt'],
+      ),
     ));
     await tester.pumpAndSettle();
 

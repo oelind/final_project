@@ -6,7 +6,8 @@ import 'login_page.dart';
 class DrawingLogApp extends StatelessWidget {
   final FirebaseAuth? auth;
   final FirebaseFirestore? firestore;
-  const DrawingLogApp({super.key, this.auth, this.firestore});
+  final List<String>? initialPrompts;
+  const DrawingLogApp({super.key, this.auth, this.firestore, this.initialPrompts});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class DrawingLogApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: LoginPage(auth: auth, firestore: firestore),
+      home: LoginPage(auth: auth, firestore: firestore, initialPrompts: initialPrompts),
     );
   }
 }

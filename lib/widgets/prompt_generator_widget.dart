@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class PromptGeneratorWidget extends StatefulWidget {
-  const PromptGeneratorWidget({super.key});
+  final List<String>? initialPrompts;
+  const PromptGeneratorWidget({super.key, this.initialPrompts});
 
   @override
   State<PromptGeneratorWidget> createState() => _PromptGeneratorWidgetState();
@@ -17,7 +18,12 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
   @override
   void initState() {
     super.initState();
-    _loadPrompts();
+    if (widget.initialPrompts != null) {
+      _prompts = widget.initialPrompts!;
+      _isLoading = false;
+    } else {
+      _loadPrompts();
+    }
   }
 
   Future<void> _loadPrompts() async {

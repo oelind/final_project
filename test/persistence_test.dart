@@ -18,7 +18,11 @@ void main() {
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: false);
 
     // 1. Initial login
-    await tester.pumpWidget(DrawingLogApp(auth: mockAuth, firestore: mockFirestore));
+    await tester.pumpWidget(DrawingLogApp(
+      auth: mockAuth, 
+      firestore: mockFirestore,
+      initialPrompts: ['Test Prompt'],
+    ));
     await tester.pumpAndSettle();
 
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'test@example.com');
@@ -91,7 +95,11 @@ void main() {
       'createdAt': FieldValue.serverTimestamp(),
     });
 
-    await tester.pumpWidget(DrawingLogApp(auth: mockAuth, firestore: mockFirestore));
+    await tester.pumpWidget(DrawingLogApp(
+      auth: mockAuth, 
+      firestore: mockFirestore,
+      initialPrompts: ['Test Prompt'],
+    ));
     await tester.pumpAndSettle();
 
     // Login
