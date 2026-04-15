@@ -5,6 +5,7 @@ import 'models/drawing.dart';
 import 'widgets/drawing_card.dart';
 import 'widgets/goal_progress_widget.dart';
 import 'widgets/drawing_log_dialog.dart';
+import 'widgets/prompt_generator_widget.dart';
 import 'services/signout_user.dart';
 import 'goal_setup_screen.dart';
 import 'login_page.dart';
@@ -141,6 +142,8 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        const PromptGeneratorWidget(),
                       ],
                     ),
                   );
@@ -148,8 +151,11 @@ class HomeScreen extends StatelessWidget {
 
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: documents.length,
+                  itemCount: documents.length + 1, // Add 1 for the PromptGenerator
                   itemBuilder: (context, index) {
+                    if (index == documents.length) {
+                      return const PromptGeneratorWidget();
+                    }
                     final data = documents[index].data() as Map<String, dynamic>;
                     final drawing = Drawing.fromFirestore(data);
                     return DrawingCard(drawing: drawing);
