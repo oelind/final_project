@@ -28,6 +28,7 @@
 
 12. [x] Create tests that verify users can successfully create and save their goal from the settings button. Also ensure that the user after having successfully created a goal they are then sent to the home page and notified from a pop up that they were able to sucessfully create a goal that was saved.
 
+13. [ ] Do requirment 10 and create unit tests to make sure the button works.
 
 ** Development Rules **
 

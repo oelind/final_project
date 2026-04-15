@@ -51,7 +51,7 @@ I used because I was a lil confused on the purpose of this document-->
 
 <!--list of ideas for drawings screen-->
 
-<!--Button for a widget thatrandomly selects one of the prompts from the list for user to follow for a drawing-->
+10. On the home screen below the logged drawing entries create a a random drawing prompt generator using the object_prompts.txt file randomly select one of the words to be outputed as the generated drawing prompt. Have a button that the user presses to output a the randomly selected drawing prompt with only a single drawing prompt displayed at any given time.
 
 <!--lists of various discriptors of actions for a prompt (like specific style to draw in/ media used/ in color or not/ landscape or portrait 
 orientation/ )-->
