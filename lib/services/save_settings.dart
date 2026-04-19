@@ -24,9 +24,11 @@ Future<void> saveSettings({
   final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
   final user = effectiveAuth.currentUser;
 
+//if a user somehow got this far without logging in and tried to set a goal 
+//then they would be notified that they are not signed in
   if (user == null) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('User not logged in')),
+      const SnackBar(content: Text('User not logged in. Please log in to be able to save your selected settings')),
     );
     return;
   }
@@ -42,7 +44,8 @@ Future<void> saveSettings({
         'reminderEndTime': reminderEndTime ?? '12:00 AM',
       }
     }, SetOptions(merge: true));
-
+//what happens if the goal is successfully saved--> which is a pop up notifying
+//the user that their log entry was saved properly
     if (context.mounted) {
       // Show success popup (Requirement 12)
       await showDialog(
@@ -61,12 +64,15 @@ Future<void> saveSettings({
           ],
         ),
       );
-
+//then after the notification if no errors occur then the user is then sent
+//back to the home screen
       if (context.mounted) {
         // After dialog is dismissed, go back to Home Screen
         Navigator.of(context).pop();
       }
     }
+    //this is to account for the case of a log entry not being properly saved
+
   } catch (e) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(

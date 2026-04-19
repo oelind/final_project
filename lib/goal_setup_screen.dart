@@ -56,7 +56,13 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
     final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
     final user = effectiveAuth.currentUser;
 
-    if (user == null) return;
+//case of user not being signed in and trying to set a goal
+    if (user == null){
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not logged in. Please log in to be able to save your goal')),
+    );
+     return;
+     }//end if if statment for case of user not logged in
 
     try {
       final doc = await effectiveFirestore.collection('users').doc(user.uid).get();
