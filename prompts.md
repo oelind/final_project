@@ -37,7 +37,9 @@
 
 16. [x] Do prompt 15 again but this time ensuring to connect the app to firsebase cloud firstore of the firebase project connected to this app. Update the stored re-CAPTCHA key for the web-app version of the app if need be.
 
-17. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
+17. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
+
+18. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
 
 
 
