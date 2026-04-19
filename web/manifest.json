@@ -1,11 +1,11 @@
 {
-    "name": "final_project",
-    "short_name": "final_project",
+    "name": "final_project_drawing_log",
+    "short_name": "drawing_log",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#B1CFA0",
+    "theme_color": "#154956",
+    "description": "A new Flutter project designed to log the amount of time spent drawing. Drawing tends to be the base for many forms of art from painting to print making and even for ceramics. In order to get better at something practice is required-- I created this app to not only help me maintain my drawing skills but to potentially help others.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
