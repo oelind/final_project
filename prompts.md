@@ -39,7 +39,7 @@
 
 17. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
 
-18. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
+17. [x] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
 
 
 
