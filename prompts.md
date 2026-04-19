@@ -34,9 +34,12 @@
 
 15. [x] Generate neccissary code to fufill requirment 11 and integrate firebase with this app. Then create unit tests for the code that an experienced quality assurance tester would create to test the generated code and that firebase is properly integrated with the app to store all the user data. Also ensure that tests are generated to ensure compatability with the rest of the code for the app and with other features and if any tests are failed fix the code until the failed tests are passed.
 
-16. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
 
-17. [ ] Connect the app to firsebase cloud firstore of the firebase project connected to this app.
+16. [ ] Do prompt 15 again but this time ensuring to connect the app to firsebase cloud firstore of the firebase project connected to this app.
+
+17. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
+
+
 
 
 ** Development Rules **
