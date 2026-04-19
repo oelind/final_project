@@ -36,6 +36,8 @@
 
 16. [ ] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
 
+17. [ ] Connect the app to firsebase cloud firstore of the firebase project connected to this app.
+
 
 ** Development Rules **
 
