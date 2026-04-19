@@ -46,6 +46,64 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
+    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final user = effectiveAuth.currentUser;
+
+    if (user == null) return;
+
+    try {
+      final doc = await effectiveFirestore.collection('users').doc(user.uid).get();
+      if (doc.exists && doc.data() != null) {
+        final userData = doc.data() as Map<String, dynamic>;
+        final settings = userData['settings'] as Map<String, dynamic>?;
+
+        if (settings != null) {
+          setState(() {
+            _timeController.text = (settings['timeGoal'] as num?)?.toString() ?? '';
+            isWeeklyGoal = settings['isWeeklyGoal'] ?? true;
+            wantNotifications = settings['wantNotifications'] ?? false;
+            reminderFrequency = settings['reminderFrequency'] ?? 'Daily';
+            
+            // Parse time strings back to TimeOfDay if possible
+            if (settings['reminderStartTime'] != null) {
+              reminderStartTime = _parseTimeOfDay(settings['reminderStartTime']);
+            }
+            if (settings['reminderEndTime'] != null) {
+              reminderEndTime = _parseTimeOfDay(settings['reminderEndTime']);
+            }
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading settings: $e');
+    }
+  }
+
+  TimeOfDay _parseTimeOfDay(String timeStr) {
+    try {
+      final parts = timeStr.split(' ');
+      final timeParts = parts[0].split(':');
+      int hour = int.parse(timeParts[0]);
+      final minute = int.parse(timeParts[1]);
+      final isPM = parts[1].toUpperCase() == 'PM';
+
+      if (isPM && hour != 12) hour += 12;
+      if (!isPM && hour == 12) hour = 0;
+
+      return TimeOfDay(hour: hour, minute: minute);
+    } catch (e) {
+      return const TimeOfDay(hour: 12, minute: 0);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

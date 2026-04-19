@@ -1,10 +1,20 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PromptGeneratorWidget extends StatefulWidget {
   final List<String>? initialPrompts;
-  const PromptGeneratorWidget({super.key, this.initialPrompts});
+  final FirebaseAuth? auth;
+  final FirebaseFirestore? firestore;
+
+  const PromptGeneratorWidget({
+    super.key, 
+    this.initialPrompts,
+    this.auth,
+    this.firestore,
+  });
 
   @override
   State<PromptGeneratorWidget> createState() => _PromptGeneratorWidgetState();
@@ -18,45 +28,86 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
   @override
   void initState() {
     super.initState();
+    _initWidget();
+  }
+
+  Future<void> _initWidget() async {
     if (widget.initialPrompts != null) {
       _prompts = widget.initialPrompts!;
-      _isLoading = false;
     } else {
-      _loadPrompts();
+      await _loadPromptsFromAssets();
+    }
+    await _loadLastPromptFromFirestore();
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
-  Future<void> _loadPrompts() async {
+  Future<void> _loadPromptsFromAssets() async {
     try {
       final String content = await rootBundle.loadString('assets/object_prompts.txt');
       final List<String> lines = content.split('\n');
       
-      // Filter out empty lines, category headers (not starting with -), and dashes
       final List<String> filteredPrompts = lines
           .map((line) => line.replaceAll('-', '').trim())
           .where((line) => line.isNotEmpty)
           .toList();
 
-      setState(() {
-        _prompts = filteredPrompts;
-        _isLoading = false;
-      });
+      _prompts = filteredPrompts;
     } catch (e) {
-      debugPrint('Error loading prompts: $e');
-      setState(() {
-        _currentPrompt = 'Error loading prompts.';
-        _isLoading = false;
-      });
+      debugPrint('Error loading prompts from assets: $e');
     }
   }
 
-  void _generatePrompt() {
+  Future<void> _loadLastPromptFromFirestore() async {
+    final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
+    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final user = effectiveAuth.currentUser;
+
+    if (user == null) return;
+
+    try {
+      final doc = await effectiveFirestore.collection('users').doc(user.uid).get();
+      if (doc.exists) {
+        final data = doc.data() as Map<String, dynamic>;
+        final state = data['state'] as Map<String, dynamic>?;
+        if (state != null && state['lastPrompt'] != null) {
+          _currentPrompt = state['lastPrompt'];
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading last prompt: $e');
+    }
+  }
+
+  Future<void> _generatePrompt() async {
     if (_prompts.isEmpty) return;
     
     final random = Random();
+    final newPrompt = _prompts[random.nextInt(_prompts.length)];
+    
     setState(() {
-      _currentPrompt = _prompts[random.nextInt(_prompts.length)];
+      _currentPrompt = newPrompt;
     });
+
+    // Save to Firestore
+    final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
+    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final user = effectiveAuth.currentUser;
+
+    if (user != null) {
+      try {
+        await effectiveFirestore.collection('users').doc(user.uid).set({
+          'state': {
+            'lastPrompt': newPrompt,
+          }
+        }, SetOptions(merge: true));
+      } catch (e) {
+        debugPrint('Error saving last prompt: $e');
+      }
+    }
   }
 
   @override

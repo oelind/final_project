@@ -136,7 +136,11 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          PromptGeneratorWidget(initialPrompts: initialPrompts),
+                          PromptGeneratorWidget(
+                            initialPrompts: initialPrompts,
+                            auth: effectiveAuth,
+                            firestore: effectiveFirestore,
+                          ),
                         ],
                       ),
                     ),
@@ -148,7 +152,11 @@ class HomeScreen extends StatelessWidget {
                   itemCount: documents.length + 1,
                   itemBuilder: (context, index) {
                     if (index == documents.length) {
-                      return PromptGeneratorWidget(initialPrompts: initialPrompts);
+                      return PromptGeneratorWidget(
+                        initialPrompts: initialPrompts,
+                        auth: effectiveAuth,
+                        firestore: effectiveFirestore,
+                      );
                     }
                     final data = documents[index].data() as Map<String, dynamic>;
                     final drawing = Drawing.fromFirestore(data);

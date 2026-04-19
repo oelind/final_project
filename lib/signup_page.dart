@@ -74,6 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
         auth: _auth,
         email: email,
         password: password,
+        firestore: widget.firestore,
       );
       
       if (userCredential?.user != null) {
