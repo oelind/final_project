@@ -1,10 +1,10 @@
 # final_project
 
-A new Flutter project.
+This is a new Flutter project designed to log the amount of time spent drawing. Drawing tends to be the base for many forms of art from painting to print making and even for ceramics. In order to get better at something practice is required-- I created this app to not only help me maintain my drawing skills but to potentially help others
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+
 
 A few resources to get you started if this is your first Flutter project:
 
