@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+//this function saves modifications for the user's notifications,
+// it also should save modifications made to the user's goal(verifying if it does).
 Future<void> saveSettings({
   required BuildContext context,
   required String timeGoal,
@@ -31,8 +33,10 @@ Future<void> saveSettings({
       const SnackBar(content: Text('User not logged in. Please log in to be able to save your selected settings')),
     );
     return;
-  }
+  }//end of if statment to catch case of user not being signed in
 
+//the following code stores values entered by the user
+// for variables to ultimatly be stored with data for their account
   try {
     await effectiveFirestore.collection('users').doc(user.uid).set({
       'settings': {
@@ -42,7 +46,9 @@ Future<void> saveSettings({
         'reminderFrequency': reminderFrequency,
         'reminderStartTime': reminderStartTime ?? '12:00 PM',
         'reminderEndTime': reminderEndTime ?? '12:00 AM',
-      }
+      } //end of try
+      //replaces specified values like user input instead
+      //of the default values for those variables
     }, SetOptions(merge: true));
 //what happens if the goal is successfully saved--> which is a pop up notifying
 //the user that their log entry was saved properly
@@ -71,8 +77,8 @@ Future<void> saveSettings({
         Navigator.of(context).pop();
       }
     }
-    //this is to account for the case of a log entry not being properly saved
 
+    //this is to account for the case of a log entry not being properly saved
   } catch (e) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
