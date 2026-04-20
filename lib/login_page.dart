@@ -45,16 +45,19 @@ class _LoginPageState extends State<LoginPage> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
+    //case for if the user did not enter their password
+    // or if the user did not enter their email
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter both email and password.'),
+          content: Text('Please enter both your email and your password.'),
           backgroundColor: Colors.orangeAccent,
         ),
       );
       return;
-    }
+    }//end of if statment for missing password/ missing email
 
+//this chunk of code gets the user's user-credentials for firebase
     try {
       final userCredential = await loginUser(
         auth: _auth,
@@ -62,6 +65,8 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
+      //if statment for if a uder does have the proper credential
+      // for/through firebase authorization
       if (userCredential?.user != null) {
         debugPrint('Login successful for: ${userCredential?.user?.email}');
         if (mounted) {
@@ -116,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }
-  }
+  }//end over overarching login function
 
   @override
   Widget build(BuildContext context) {
