@@ -52,7 +52,7 @@ Future<void> loginProcess({
 
     // If statement for if a user does have the proper credential
     // for/through firebase authorization
-    if (userCredential?.user != null) {
+    if (userCredential?.user != null && userCredential?.user?.email != null) {
       debugPrint('Login successful for: ${userCredential?.user?.email}');
       if (context.mounted) {
         Navigator.of(context).pushReplacement(

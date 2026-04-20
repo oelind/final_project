@@ -69,7 +69,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
-    // Depending on MockFirebaseAuth behavior, it might succeed or fail.
-    // If it fails, we expect a snackbar.
+    // Now we expect a login failure message because user.email is null or user is missing
+    expect(find.text('Login failed. Please check your credentials.'), findsOneWidget);
   });
 }
