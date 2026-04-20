@@ -90,7 +90,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: _login,
+                onPressed: () => loginProcess(
+                  context: context,
+                  auth: _auth,
+                  email: _emailController.text.trim(),
+                  password: _passwordController.text,
+                  firestore: widget.firestore,
+                  initialPrompts: widget.initialPrompts,
+                ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -119,88 +126,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-   Future<void> _login() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text;
-
-    //case for if the user did not enter their password
-    // or if the user did not enter their email
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter both your email and your password.'),
-          backgroundColor: Colors.orangeAccent,
-        ),
-      );
-      return;
-    }//end of if statment for missing password/ missing email
-
-//this chunk of code gets the user's user-credentials for firebase
-    try {
-      final userCredential = await loginUser(
-        auth: _auth,
-        email: email,
-        password: password,
-      );
-
-      //if statment for if a uder does have the proper credential
-      // for/through firebase authorization
-      if (userCredential?.user != null) {
-        debugPrint('Login successful for: ${userCredential?.user?.email}');
-        if (mounted) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                auth: _auth,
-                firestore: widget.firestore,
-                initialPrompts: widget.initialPrompts,
-              ),
-            ),
-          );
-        }
-      }
- else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login failed. Please check your credentials.'),
-              backgroundColor: Colors.redAccent,
-            ),
-          );
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      debugPrint('Login failed for: $email - ${e.code}');
-      String message = 'Invalid email or password.';
-      if (e.code == 'user-not-found') {
-        message = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        message = 'Wrong password provided for that user.';
-      } else if (e.code == 'invalid-email') {
-        message = 'The email address is badly formatted.';
-      }
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('An error occurred during login: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('An unexpected error occurred. Please try again.'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-      }
-    }
-  }//end over overarching login function
 
   @override
   void dispose() {
