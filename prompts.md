@@ -37,9 +37,14 @@
 
 16. [x] Do prompt 15 again but this time ensuring to connect the app to firsebase cloud firstore of the firebase project connected to this app. Update the stored re-CAPTCHA key for the web-app version of the app if need be.
 
-17. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
+
 
 17. [x] Ensure that the goal set by the user is saved between app restarts and add unit tests to verify this.
+
+18. [ ] Move the function _login inside the file login_page.dart to 'services/login_user.dart' and then properly call the _login function from the login_page.dart file in the lib folder. Generate unit tests as if you were a junior Quality Assurance tester to ensure that after the function has been moved that it is called properly and works. Fix the code until the tests can be passed
+
+19. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
+
 
 
 
