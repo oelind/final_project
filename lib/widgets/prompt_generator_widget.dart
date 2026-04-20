@@ -66,6 +66,8 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
     final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
     final user = effectiveAuth.currentUser;
 
+//need to add an error here letting user know thay are signed out and then
+//send them to login page
     if (user == null) return;
 
     try {
