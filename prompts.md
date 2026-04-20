@@ -45,7 +45,7 @@
 
 19. [ ] Please make sure the firebase real time database is integrated with this project instead of firestore. Essentially swap out firestore for real time database through firebase and unintegrate firestore. Check that prompt 15 is also properly fufilled with this change in data storage location in firebase. Also keep the firebase authentication code if it works properly.
 
-20. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
+20. [ ] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist or include tests that cover code not covered by the other file. 
 
 
 
