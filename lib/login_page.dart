@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'home_screen.dart';
 import 'signup_page.dart';
 import 'services/login_user.dart';
 
 class LoginPage extends StatefulWidget {
   final FirebaseAuth? auth;
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
   final List<String>? initialPrompts;
-  const LoginPage({super.key, this.auth, this.firestore, this.initialPrompts});
+  const LoginPage({super.key, this.auth, this.database, this.initialPrompts});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(
             builder: (context) => HomeScreen(
               auth: _auth,
-              firestore: widget.firestore,
+              database: widget.database,
               initialPrompts: widget.initialPrompts,
             ),
           ),
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   auth: _auth,
                   email: _emailController.text.trim(),
                   password: _passwordController.text,
-                  firestore: widget.firestore,
+                  database: widget.database,
                   initialPrompts: widget.initialPrompts,
                 ),
                 style: ElevatedButton.styleFrom(
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(
                       builder: (context) => SignUpPage(
                         auth: widget.auth,
-                        firestore: widget.firestore,
+                        database: widget.database,
                       ),
                     ),
                   );
