@@ -43,7 +43,7 @@
 
 18. [x] Move the function _login inside the file login_page.dart to 'services/login_user.dart' and then properly call the _login function from the login_page.dart file in the lib folder. Generate unit tests as if you were a junior Quality Assurance tester to ensure that after the function has been moved that it is called properly and works. Fix the code until the tests can be passed
 
-19. [ ] Please make sure the firebase real time database is integrated with this project instead of firestore. Essentially swap out firestore for real time database through firebase and unintegrate firestore. Generate unit tests to verify the firebase real time database has been properly integrated. Also generate tests to check that real time database through firebase is being used not firestore. Check that prompt 15 is also properly fufilled with this change in data storage location in firebase. Also if the code is not passing the tests fix it and test it until all of the generated tests are passed.
+19. [ ] Please make sure the firebase real time database is integrated with this project instead of firestore. Essentially swap out firestore for real time database through firebase and unintegrate firestore. Check that prompt 15 is also properly fufilled with this change in data storage location in firebase. Also keep the firebase authentication code if it works properly.
 
 20. [ ] Create unit tests for requirment 11. generate unit tests for all of the requirments in the requirments.md file with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist.
 
