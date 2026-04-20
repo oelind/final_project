@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'services/save_settings.dart';
 
 class GoalSetupScreen extends StatefulWidget {
   final FirebaseAuth? auth;
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
 
-  const GoalSetupScreen({super.key, this.auth, this.firestore});
+  const GoalSetupScreen({super.key, this.auth, this.database});
 
   @override
   State<GoalSetupScreen> createState() => _GoalSetupScreenState();
@@ -53,7 +53,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
 
   Future<void> _loadSettings() async {
     final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = widget.database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
 //case of user not being signed in and trying to set a goal
@@ -65,27 +65,24 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
      }//end if if statment for case of user not logged in
 
     try {
-      final doc = await effectiveFirestore.collection('users').doc(user.uid).get();
-      if (doc.exists && doc.data() != null) {
-        final userData = doc.data() as Map<String, dynamic>;
-        final settings = userData['settings'] as Map<String, dynamic>?;
+      final snapshot = await effectiveDatabase.ref('users/${user.uid}/settings').get();
+      if (snapshot.exists && snapshot.value != null) {
+        final settings = Map<dynamic, dynamic>.from(snapshot.value as Map);
 
-        if (settings != null) {
-          setState(() {
-            _timeController.text = (settings['timeGoal'] as num?)?.toString() ?? '';
-            isWeeklyGoal = settings['isWeeklyGoal'] ?? true;
-            wantNotifications = settings['wantNotifications'] ?? false;
-            reminderFrequency = settings['reminderFrequency'] ?? 'Daily';
-            
-            // Parse time strings back to TimeOfDay if possible
-            if (settings['reminderStartTime'] != null) {
-              reminderStartTime = _parseTimeOfDay(settings['reminderStartTime']);
-            }
-            if (settings['reminderEndTime'] != null) {
-              reminderEndTime = _parseTimeOfDay(settings['reminderEndTime']);
-            }
-          });
-        }
+        setState(() {
+          _timeController.text = (settings['timeGoal'] as num?)?.toString() ?? '';
+          isWeeklyGoal = settings['isWeeklyGoal'] ?? true;
+          wantNotifications = settings['wantNotifications'] ?? false;
+          reminderFrequency = settings['reminderFrequency'] ?? 'Daily';
+          
+          // Parse time strings back to TimeOfDay if possible
+          if (settings['reminderStartTime'] != null) {
+            reminderStartTime = _parseTimeOfDay(settings['reminderStartTime']);
+          }
+          if (settings['reminderEndTime'] != null) {
+            reminderEndTime = _parseTimeOfDay(settings['reminderEndTime']);
+          }
+        });
       }
     } catch (e) {
       debugPrint('Error loading settings: $e');
@@ -186,7 +183,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                 const Text('Reminder Frequency:', style: TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
-                  initialValue: reminderFrequency,
+                  value: reminderFrequency,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
@@ -244,7 +241,7 @@ class _GoalSetupScreenState extends State<GoalSetupScreen> {
                   reminderStartTime: _formatTime(reminderStartTime),
                   reminderEndTime: _formatTime(reminderEndTime),
                   auth: widget.auth,
-                  firestore: widget.firestore,
+                  database: widget.database,
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),

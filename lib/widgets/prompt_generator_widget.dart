@@ -1,19 +1,19 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PromptGeneratorWidget extends StatefulWidget {
   final List<String>? initialPrompts;
   final FirebaseAuth? auth;
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
 
   const PromptGeneratorWidget({
     super.key, 
     this.initialPrompts,
     this.auth,
-    this.firestore,
+    this.database,
   });
 
   @override
@@ -37,7 +37,7 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
     } else {
       await _loadPromptsFromAssets();
     }
-    await _loadLastPromptFromFirestore();
+    await _loadLastPromptFromDatabase();
     if (mounted) {
       setState(() {
         _isLoading = false;
@@ -61,23 +61,19 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
     }
   }
 
-  Future<void> _loadLastPromptFromFirestore() async {
+  Future<void> _loadLastPromptFromDatabase() async {
     final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = widget.database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
-//need to add an error here letting user know thay are signed out and then
-//send them to login page
     if (user == null) return;
 
     try {
-      final doc = await effectiveFirestore.collection('users').doc(user.uid).get();
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
-        final state = data['state'] as Map<String, dynamic>?;
-        if (state != null && state['lastPrompt'] != null) {
-          _currentPrompt = state['lastPrompt'];
-        }
+      final snapshot = await effectiveDatabase.ref('users/${user.uid}/state/lastPrompt').get();
+      if (snapshot.exists && snapshot.value != null) {
+        setState(() {
+          _currentPrompt = snapshot.value as String;
+        });
       }
     } catch (e) {
       debugPrint('Error loading last prompt: $e');
@@ -94,18 +90,16 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
       _currentPrompt = newPrompt;
     });
 
-    // Save to Firestore
+    // Save to Database
     final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = widget.database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
     if (user != null) {
       try {
-        await effectiveFirestore.collection('users').doc(user.uid).set({
-          'state': {
-            'lastPrompt': newPrompt,
-          }
-        }, SetOptions(merge: true));
+        await effectiveDatabase.ref('users/${user.uid}/state').update({
+          'lastPrompt': newPrompt,
+        });
       } catch (e) {
         debugPrint('Error saving last prompt: $e');
       }

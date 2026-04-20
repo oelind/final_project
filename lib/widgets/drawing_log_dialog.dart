@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class DrawingLogDialog extends StatefulWidget {
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
   final FirebaseAuth? auth;
 
-  const DrawingLogDialog({super.key, this.firestore, this.auth});
+  const DrawingLogDialog({super.key, this.database, this.auth});
 
   @override
   State<DrawingLogDialog> createState() => _DrawingLogDialogState();
@@ -73,12 +73,12 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
   }
 
 // function responsible for saving drawing log entries
-// Drawing log entries are saved to Firestore and persist between sessions.
+// Drawing log entries are saved to Realtime Database and persist between sessions.
   Future<void> _saveEntry() async {
     if (!_formKey.currentState!.validate()) return;
 
     final effectiveAuth = widget.auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = widget.firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = widget.database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
     if (user == null) return;
@@ -86,14 +86,15 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     final timeInMinutes = double.tryParse(_timeController.text) ?? 0.0;
 
     try {
-      await effectiveFirestore.collection('drawings').add({
+      final newDrawingRef = effectiveDatabase.ref('drawings').push();
+      await newDrawingRef.set({
         'userId': user.uid,
         'title': _titleController.text.isEmpty ? 'Untitled' : _titleController.text,
         'description': _descriptionController.text,
         'timeSpentMinutes': timeInMinutes.toInt(),
         'effort': _effort,
-        'timestamp': Timestamp.fromDate(_selectedDate),
-        'createdAt': FieldValue.serverTimestamp(),
+        'timestamp': _selectedDate.millisecondsSinceEpoch,
+        'createdAt': ServerValue.timestamp,
       });
 
 //case of a drawing log being successfully saved
@@ -155,7 +156,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                   padding: const EdgeInsets.only(top: 8.0),
                   //shows the amount of time that has passed since the timer was started
                   child: Text(
-                    'Timer active: ${(_secondsElapsed ~/ 60)}m ${(_secondsElapsed ~/ 60)}s',
+                    'Timer active: ${(_secondsElapsed ~/ 60)}m ${(_secondsElapsed % 60)}s',
                     style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -171,7 +172,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
               const SizedBox(height: 12),
               //where user selects the amount of effort they put into what they drew
               DropdownButtonFormField<String>(
-                initialValue: _effort,
+                value: _effort,
                 decoration: const InputDecoration(labelText: 'Effort Level'),
                 items: ['Low', 'Medium', 'High']
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))

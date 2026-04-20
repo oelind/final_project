@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 //this function saves modifications for the user's notifications,
@@ -13,7 +13,7 @@ Future<void> saveSettings({
   String? reminderStartTime,
   String? reminderEndTime,
   FirebaseAuth? auth,
-  FirebaseFirestore? firestore,
+  FirebaseDatabase? database,
 }) async {
   if (timeGoal.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -23,7 +23,7 @@ Future<void> saveSettings({
   }
 
   final effectiveAuth = auth ?? FirebaseAuth.instance;
-  final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
+  final effectiveDatabase = database ?? FirebaseDatabase.instance;
   final user = effectiveAuth.currentUser;
 
 //if a user somehow got this far without logging in and tried to set a goal 
@@ -38,18 +38,14 @@ Future<void> saveSettings({
 //the following code stores values entered by the user
 // for variables to ultimatly be stored with data for their account
   try {
-    await effectiveFirestore.collection('users').doc(user.uid).set({
-      'settings': {
-        'timeGoal': double.tryParse(timeGoal) ?? 0.0,
-        'isWeeklyGoal': isWeeklyGoal,
-        'wantNotifications': wantNotifications,
-        'reminderFrequency': reminderFrequency,
-        'reminderStartTime': reminderStartTime ?? '12:00 PM',
-        'reminderEndTime': reminderEndTime ?? '12:00 AM',
-      } //end of try
-      //replaces specified values like user input instead
-      //of the default values for those variables
-    }, SetOptions(merge: true));
+    await effectiveDatabase.ref('users/${user.uid}/settings').update({
+      'timeGoal': double.tryParse(timeGoal) ?? 0.0,
+      'isWeeklyGoal': isWeeklyGoal,
+      'wantNotifications': wantNotifications,
+      'reminderFrequency': reminderFrequency,
+      'reminderStartTime': reminderStartTime ?? '12:00 PM',
+      'reminderEndTime': reminderEndTime ?? '12:00 AM',
+    });
 //what happens if the goal is successfully saved--> which is a pop up notifying
 //the user that their log entry was saved properly
     if (context.mounted) {

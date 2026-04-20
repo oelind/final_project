@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/drawing.dart';
 
 class GoalProgressWidget extends StatelessWidget {
   final FirebaseAuth? auth;
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
 
-  const GoalProgressWidget({super.key, this.auth, this.firestore});
+  const GoalProgressWidget({super.key, this.auth, this.database});
 
   @override
   Widget build(BuildContext context) {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
     if (user == null) return const SizedBox.shrink();
 
-    return StreamBuilder<DocumentSnapshot>(
-      stream: effectiveFirestore.collection('users').doc(user.uid).snapshots(),
+    return StreamBuilder<DatabaseEvent>(
+      stream: effectiveDatabase.ref('users/${user.uid}').onValue,
       builder: (context, userSnapshot) {
-        if (!userSnapshot.hasData || userSnapshot.data?.data() == null) {
+        if (!userSnapshot.hasData || userSnapshot.data?.snapshot.value == null) {
           return const SizedBox.shrink();
         }
 
-        final userData = userSnapshot.data!.data() as Map<String, dynamic>;
-        final settings = userData['settings'] as Map<String, dynamic>?;
+        final userData = Map<dynamic, dynamic>.from(userSnapshot.data!.snapshot.value as Map);
+        final settings = userData['settings'] as Map<dynamic, dynamic>?;
         if (settings == null) return const SizedBox.shrink();
 
         final double timeGoal = (settings['timeGoal'] as num?)?.toDouble() ?? 0.0;
@@ -33,17 +33,21 @@ class GoalProgressWidget extends StatelessWidget {
 
         if (timeGoal <= 0) return const SizedBox.shrink();
 
-        return StreamBuilder<QuerySnapshot>(
-          stream: effectiveFirestore
-              .collection('drawings')
-              .where('userId', isEqualTo: user.uid)
-              .snapshots(),
+        return StreamBuilder<DatabaseEvent>(
+          stream: effectiveDatabase.ref('drawings')
+              .orderByChild('userId')
+              .equalTo(user.uid)
+              .onValue,
           builder: (context, drawingSnapshot) {
             if (!drawingSnapshot.hasData) return const LinearProgressIndicator();
 
-            final drawings = drawingSnapshot.data!.docs
-                .map((doc) => Drawing.fromFirestore(doc.data() as Map<String, dynamic>))
-                .toList();
+            List<Drawing> drawings = [];
+            if (drawingSnapshot.data!.snapshot.value != null) {
+              final drawingsMap = Map<dynamic, dynamic>.from(drawingSnapshot.data!.snapshot.value as Map);
+              drawings = drawingsMap.values
+                  .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map)))
+                  .toList();
+            }
 
             // Calculate time spent in current period
             final now = DateTime.now();

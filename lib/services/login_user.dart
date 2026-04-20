@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../home_screen.dart';
 
@@ -27,7 +27,7 @@ Future<void> loginProcess({
   required FirebaseAuth auth,
   required String email,
   required String password,
-  required FirebaseFirestore? firestore,
+  required FirebaseDatabase? database,
   required List<String>? initialPrompts,
 }) async {
   // Case for if the user did not enter their password
@@ -59,7 +59,7 @@ Future<void> loginProcess({
           MaterialPageRoute(
             builder: (context) => HomeScreen(
               auth: auth,
-              firestore: firestore,
+              database: database,
               initialPrompts: initialPrompts,
             ),
           ),

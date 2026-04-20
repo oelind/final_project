@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 Future<UserCredential?> signupUser({
   required FirebaseAuth auth,
   required String email,
   required String password,
-  FirebaseFirestore? firestore,
+  FirebaseDatabase? database,
 }) async {
   try {
     final credential = await auth.createUserWithEmailAndPassword(
@@ -15,10 +15,10 @@ Future<UserCredential?> signupUser({
     );
 
     if (credential.user != null) {
-      final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
-      await effectiveFirestore.collection('users').doc(credential.user!.uid).set({
+      final effectiveDatabase = database ?? FirebaseDatabase.instance;
+      await effectiveDatabase.ref('users/${credential.user!.uid}').set({
         'email': email,
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt': ServerValue.timestamp,
         'settings': {
           'timeGoal': 0.0,
           'isWeeklyGoal': true,

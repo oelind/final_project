@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'services/signup_user.dart';
 
 class SignUpPage extends StatefulWidget {
   final FirebaseAuth? auth;
-  final FirebaseFirestore? firestore;
-  const SignUpPage({super.key, this.auth, this.firestore});
+  final FirebaseDatabase? database;
+  const SignUpPage({super.key, this.auth, this.database});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -74,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
         auth: _auth,
         email: email,
         password: password,
-        firestore: widget.firestore,
+        database: widget.database,
       );
       
       if (userCredential?.user != null) {

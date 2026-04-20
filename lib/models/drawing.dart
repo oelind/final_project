@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Drawing {
   final String title;
   final String description;
@@ -21,7 +19,17 @@ class Drawing {
     required this.timeSpent,
   });
 
-  factory Drawing.fromFirestore(Map<String, dynamic> data) {
+  factory Drawing.fromMap(Map<dynamic, dynamic> data) {
+    DateTime parsedTimestamp;
+    final timestampData = data['timestamp'];
+    if (timestampData is int) {
+      parsedTimestamp = DateTime.fromMillisecondsSinceEpoch(timestampData);
+    } else if (timestampData is String) {
+      parsedTimestamp = DateTime.parse(timestampData);
+    } else {
+      parsedTimestamp = DateTime.now();
+    }
+
     return Drawing(
       title: data['title'] ?? 'Untitled',
       description: data['description'] ?? '',
@@ -29,8 +37,21 @@ class Drawing {
       mediums: List<String>.from(data['mediums'] ?? []),
       size: data['size'] ?? '',
       effort: data['effort'] ?? 'Medium',
-      timestamp: (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      timestamp: parsedTimestamp,
       timeSpent: Duration(minutes: data['timeSpentMinutes'] ?? 0),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'colors': colors,
+      'mediums': mediums,
+      'size': size,
+      'effort': effort,
+      'timestamp': timestamp.millisecondsSinceEpoch,
+      'timeSpentMinutes': timeSpent.inMinutes,
+    };
   }
 }

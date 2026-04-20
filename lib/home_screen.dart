@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'models/drawing.dart';
 import 'widgets/drawing_card.dart';
@@ -11,17 +11,17 @@ import 'goal_setup_screen.dart';
 import 'login_page.dart';
 
 class HomeScreen extends StatelessWidget {
-  final FirebaseFirestore? firestore;
+  final FirebaseDatabase? database;
   final FirebaseAuth? auth;
   final List<String>? initialPrompts;
   
-  const HomeScreen({super.key, this.firestore, this.auth, this.initialPrompts});
+  const HomeScreen({super.key, this.database, this.auth, this.initialPrompts});
 
   void _showLogDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => DrawingLogDialog(
-        firestore: firestore,
+        database: database,
         auth: auth,
       ),
     );
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
-    final effectiveFirestore = firestore ?? FirebaseFirestore.instance;
+    final effectiveDatabase = database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
 
     return Scaffold(
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => LoginPage(
                         auth: auth,
-                        firestore: firestore,
+                        database: database,
                       ),
                     ),
                     (route) => false,
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => GoalSetupScreen(
                         auth: effectiveAuth,
-                        firestore: effectiveFirestore,
+                        database: effectiveDatabase,
                       ),
                     ),
                   );
@@ -98,14 +98,13 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          GoalProgressWidget(auth: effectiveAuth, firestore: effectiveFirestore),
+          GoalProgressWidget(auth: effectiveAuth, database: effectiveDatabase),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: effectiveFirestore
-                  .collection('drawings')
-                  .where('userId', isEqualTo: user?.uid)
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
+            child: StreamBuilder<DatabaseEvent>(
+              stream: effectiveDatabase.ref('drawings')
+                  .orderByChild('userId')
+                  .equalTo(user?.uid)
+                  .onValue,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
@@ -115,8 +114,17 @@ class HomeScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                final documents = snapshot.data?.docs ?? [];
-                if (documents.isEmpty) {
+                final List<Drawing> drawings = [];
+                if (snapshot.data?.snapshot.value != null) {
+                  final drawingsMap = Map<dynamic, dynamic>.from(snapshot.data!.snapshot.value as Map);
+                  drawings.addAll(drawingsMap.values
+                      .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map))));
+                  
+                  // Sort by timestamp descending
+                  drawings.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+                }
+
+                if (drawings.isEmpty) {
                   return Center(
                     child: SingleChildScrollView(
                       child: Column(
@@ -139,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                           PromptGeneratorWidget(
                             initialPrompts: initialPrompts,
                             auth: effectiveAuth,
-                            firestore: effectiveFirestore,
+                            database: effectiveDatabase,
                           ),
                         ],
                       ),
@@ -149,18 +157,16 @@ class HomeScreen extends StatelessWidget {
 
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: documents.length + 1,
+                  itemCount: drawings.length + 1,
                   itemBuilder: (context, index) {
-                    if (index == documents.length) {
+                    if (index == drawings.length) {
                       return PromptGeneratorWidget(
                         initialPrompts: initialPrompts,
                         auth: effectiveAuth,
-                        firestore: effectiveFirestore,
+                        database: effectiveDatabase,
                       );
                     }
-                    final data = documents[index].data() as Map<String, dynamic>;
-                    final drawing = Drawing.fromFirestore(data);
-                    return DrawingCard(drawing: drawing);
+                    return DrawingCard(drawing: drawings[index]);
                   },
                 );
               },
