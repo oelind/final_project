@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/widgets/prompt_generator_widget.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
 
 void main() {
   testWidgets('Requirement 10: Prompt generator displays random prompt', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockFirestore = FakeFirebaseFirestore();
+    final mockDatabase = MockFirebaseDatabase.instance;
     final prompts = ['Apple', 'Banana', 'Cat'];
 
     await tester.pumpWidget(MaterialApp(
@@ -16,7 +16,7 @@ void main() {
         body: PromptGeneratorWidget(
           initialPrompts: prompts,
           auth: mockAuth,
-          firestore: mockFirestore,
+          database: mockDatabase,
         ),
       ),
     ));

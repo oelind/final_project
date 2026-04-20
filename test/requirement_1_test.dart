@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
 
 void main() {
   testWidgets('Requirement 1: Login screen has option to create an account', (WidgetTester tester) async {
@@ -24,18 +24,19 @@ void main() {
       email: 'user1@example.com',
     );
     final mockAuth = MockFirebaseAuth(mockUser: user);
-    final fakeFirestore = FakeFirebaseFirestore();
+    final mockDatabase = MockFirebaseDatabase.instance;
     
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: fakeFirestore,
+      database: mockDatabase,
     ));
 
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'user1@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
 
     await tester.tap(find.text('Login'));
-    await tester.pumpAndSettle();
+    await tester.pump(); // Start navigation
+    await tester.pump(const Duration(milliseconds: 100)); // Finish navigation
 
     expect(find.text('Drawing Log'), findsOneWidget);
   });

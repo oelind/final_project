@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/goal_setup_screen.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
 
 void main() {
   testWidgets('Requirement 2: User is prompted for weekly/daily drawing goals', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth(signedIn: true);
-    final mockFirestore = FakeFirebaseFirestore();
+    final mockDatabase = MockFirebaseDatabase.instance;
 
-    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, firestore: mockFirestore)));
+    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
     await tester.pumpAndSettle();
 
     expect(find.text('Weekly'), findsOneWidget);

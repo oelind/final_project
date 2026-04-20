@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
 
 void main() {
   late MockFirebaseAuth mockAuth;
-  late FakeFirebaseFirestore mockFirestore;
+  late MockFirebaseDatabase mockDatabase;
 
   setUp(() {
-    mockFirestore = FakeFirebaseFirestore();
+    mockDatabase = MockFirebaseDatabase.instance;
   });
 
   testWidgets('Junior QA Test: Login with correct info works', (WidgetTester tester) async {
@@ -18,13 +18,12 @@ void main() {
 
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: mockFirestore,
+      database: mockDatabase,
     ));
 
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'test@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
     await tester.tap(find.text('Login'));
-    // Use pump instead of pumpAndSettle to avoid timeout from progress indicators
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
@@ -37,7 +36,7 @@ void main() {
 
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: mockFirestore,
+      database: mockDatabase,
     ));
 
     // Leave fields empty and tap login
@@ -49,18 +48,11 @@ void main() {
   });
 
   testWidgets('Junior QA Test: Login fails with unknown user', (WidgetTester tester) async {
-    // MockFirebaseAuth by default might not throw but return null user if not configured?
-    // Actually, in many cases it returns a mock credential.
-    // To test error handling, we want to ensure the code handles the 'else' case or exceptions.
-    
-    // We can't easily force an exception in simple MockFirebaseAuth without more setup,
-    // but we can check if it shows an error if user is null.
-    
     mockAuth = MockFirebaseAuth(); // No user added to it
 
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: mockFirestore,
+      database: mockDatabase,
     ));
 
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'unknown@example.com');
@@ -69,7 +61,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
-    // Now we expect a login failure message because user.email is null or user is missing
+    // Now we expect a login failure message
     expect(find.text('Login failed. Please check your credentials.'), findsOneWidget);
   });
 }

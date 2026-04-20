@@ -1,42 +1,45 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   test('Requirement 7: Data isolation - User A cannot see User B\'s drawings', () async {
-    final firestore = FakeFirebaseFirestore();
+    final mockDatabase = MockFirebaseDatabase.instance;
     
     // User A logs a drawing
-    await firestore.collection('drawings').add({
+    await mockDatabase.ref('drawings').push().set({
       'userId': 'user_a',
       'title': 'A\'s Art',
       'timeSpentMinutes': 30,
-      'timestamp': Timestamp.now(),
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
 
     // User B logs a drawing
-    await firestore.collection('drawings').add({
+    await mockDatabase.ref('drawings').push().set({
       'userId': 'user_b',
       'title': 'B\'s Art',
       'timeSpentMinutes': 60,
-      'timestamp': Timestamp.now(),
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
 
     // Query for User A
-    final drawingsA = await firestore
-        .collection('drawings')
-        .where('userId', isEqualTo: 'user_a')
+    final snapshotA = await mockDatabase.ref('drawings')
+        .orderByChild('userId')
+        .equalTo('user_a')
         .get();
-    expect(drawingsA.docs.length, 1);
-    expect(drawingsA.docs.first['title'], 'A\'s Art');
+    
+    final drawingsA = snapshotA.value as Map;
+    expect(drawingsA.length, 1);
+    expect(drawingsA.values.first['title'], 'A\'s Art');
 
     // Query for User B
-    final drawingsB = await firestore
-        .collection('drawings')
-        .where('userId', isEqualTo: 'user_b')
+    final snapshotB = await mockDatabase.ref('drawings')
+        .orderByChild('userId')
+        .equalTo('user_b')
         .get();
-    expect(drawingsB.docs.length, 1);
-    expect(drawingsB.docs.first['title'], 'B\'s Art');
+    
+    final drawingsB = snapshotB.value as Map;
+    expect(drawingsB.length, 1);
+    expect(drawingsB.values.first['title'], 'B\'s Art');
   });
 }

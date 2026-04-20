@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   late MockFirebaseAuth mockAuth;
-  late FakeFirebaseFirestore mockFirestore;
+  late MockFirebaseDatabase mockDatabase;
 
   setUp(() {
-    mockFirestore = FakeFirebaseFirestore();
+    mockDatabase = MockFirebaseDatabase.instance;
     mockAuth = MockFirebaseAuth();
   });
 
@@ -22,7 +23,7 @@ void main() {
     // 1. App starts with Login Page
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Mock Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -45,14 +46,15 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'newuser@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
     await tester.tap(find.text('Login'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     // Verify Home Screen
     expect(find.text('Drawing Log'), findsOneWidget);
     final userId = mockAuth.currentUser!.uid;
 
     // 5. Save Settings (Goal)
-    await tester.tap(find.byIcon(Icons.settings));
+    await tester.tap(find.byIcon(Icons.settings).first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Edit Goal'));
     await tester.pumpAndSettle();
@@ -66,10 +68,9 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    // Verify Settings in Firestore
-    final userDoc = await mockFirestore.collection('users').doc(userId).get();
-    expect(userDoc.exists, true);
-    expect(userDoc.data()!['settings']['timeGoal'], 15.0);
+    // Verify Settings in Database
+    final snapshot = await mockDatabase.ref('users/$userId/settings/timeGoal').get();
+    expect(snapshot.value, 15.0);
 
     // 6. Log a Drawing
     final fabFinder = find.byType(FloatingActionButton);
@@ -85,17 +86,18 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('Firebase Masterpiece'), findsOneWidget);
 
-    // Verify Drawing in Firestore
-    final drawings = await mockFirestore
-        .collection('drawings')
-        .where('userId', isEqualTo: userId)
+    // Verify Drawing in Database
+    final drawingsSnapshot = await mockDatabase.ref('drawings')
+        .orderByChild('userId')
+        .equalTo(userId)
         .get();
-    expect(drawings.docs.length, 1);
-    expect(drawings.docs.first['title'], 'Firebase Masterpiece');
-    expect(drawings.docs.first['timeSpentMinutes'], 120);
+    final drawingsData = drawingsSnapshot.value as Map;
+    expect(drawingsData.length, 1);
+    expect(drawingsData.values.first['title'], 'Firebase Masterpiece');
+    expect(drawingsData.values.first['timeSpentMinutes'], 120);
 
     // 7. Sign Out and Verify Persistence
-    await tester.tap(find.byIcon(Icons.settings));
+    await tester.tap(find.byIcon(Icons.settings).first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sign Out'));
     await tester.pumpAndSettle();
@@ -106,7 +108,8 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'newuser@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
     await tester.tap(find.text('Login'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     // Verify data still present
     await tester.pump(const Duration(milliseconds: 100));
