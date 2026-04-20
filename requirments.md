@@ -53,7 +53,7 @@ I used because I was a lil confused on the purpose of this document-->
 
 10. On the home screen below the logged drawing entries create a a random drawing prompt generator using the object_prompts.txt file randomly select one of the words to be outputed as the generated drawing prompt. Have a button that the user presses to output a the randomly selected drawing prompt with only a single drawing prompt displayed at any given time.
 
-11. All data for the app including the login info for users will be stored in the firebase project associated with this app (ie the firebase project drawinglog-oaks-sye-sp26).
+11. All data for the app including the login info for users will be stored in the firebase project associated with this app (ie the firebase project drawinglog-oaks-sye-sp26). Specifically through and in the firebase real time database associatted with this app.
 
 <!--lists of various discriptors of actions for a prompt (like specific style to draw in/ media used/ in color or not/ landscape or portrait 
 orientation/ )-->
