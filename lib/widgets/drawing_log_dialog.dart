@@ -172,7 +172,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
               const SizedBox(height: 12),
               //where user selects the amount of effort they put into what they drew
               DropdownButtonFormField<String>(
-                value: _effort,
+                initialValue: _effort,
                 decoration: const InputDecoration(labelText: 'Effort Level'),
                 items: ['Low', 'Medium', 'High']
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
