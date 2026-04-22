@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '779730882356',
     projectId: 'drawinglog-oaks-sye-sp26',
     authDomain: 'drawinglog-oaks-sye-sp26.firebaseapp.com',
+    databaseURL: 'https://drawinglog-oaks-sye-sp26-default-rtdb.firebaseio.com',
     storageBucket: 'drawinglog-oaks-sye-sp26.firebasestorage.app',
     measurementId: 'G-4RX97B6JZS',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:779730882356:android:c896c84916c792ff76df61',
     messagingSenderId: '779730882356',
     projectId: 'drawinglog-oaks-sye-sp26',
+    databaseURL: 'https://drawinglog-oaks-sye-sp26-default-rtdb.firebaseio.com',
     storageBucket: 'drawinglog-oaks-sye-sp26.firebasestorage.app',
   );
 
@@ -63,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:779730882356:ios:b862695f3c34e42676df61',
     messagingSenderId: '779730882356',
     projectId: 'drawinglog-oaks-sye-sp26',
+    databaseURL: 'https://drawinglog-oaks-sye-sp26-default-rtdb.firebaseio.com',
     storageBucket: 'drawinglog-oaks-sye-sp26.firebasestorage.app',
     iosBundleId: 'com.example.finalProject',
   );
@@ -72,6 +75,7 @@ class DefaultFirebaseOptions {
     appId: '1:779730882356:ios:b862695f3c34e42676df61',
     messagingSenderId: '779730882356',
     projectId: 'drawinglog-oaks-sye-sp26',
+    databaseURL: 'https://drawinglog-oaks-sye-sp26-default-rtdb.firebaseio.com',
     storageBucket: 'drawinglog-oaks-sye-sp26.firebasestorage.app',
     iosBundleId: 'com.example.finalProject',
   );
@@ -82,6 +86,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '779730882356',
     projectId: 'drawinglog-oaks-sye-sp26',
     authDomain: 'drawinglog-oaks-sye-sp26.firebaseapp.com',
+    databaseURL: 'https://drawinglog-oaks-sye-sp26-default-rtdb.firebaseio.com',
     storageBucket: 'drawinglog-oaks-sye-sp26.firebasestorage.app',
     measurementId: 'G-5N4H49S7MD',
   );

@@ -13,7 +13,7 @@ void main() {
 
   setUp(() {
     mockAuth = MockFirebaseAuth(signedIn: true);
-    mockDatabase = MockFirebaseDatabase.instance;
+    mockDatabase = MockFirebaseDatabase();
   });
 
   testWidgets('Home Screen UI: Empty state shows record button', (WidgetTester tester) async {

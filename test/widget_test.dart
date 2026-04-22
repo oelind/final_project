@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 void main() {
   testWidgets('Login screen smoke test', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth();
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
     
     // Build our app and trigger a frame.
     await tester.pumpWidget(DrawingLogApp(

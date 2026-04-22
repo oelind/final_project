@@ -8,7 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 void main() {
   testWidgets('PromptGeneratorWidget should load and generate random prompts', (WidgetTester tester) async {
     final auth = MockFirebaseAuth();
-    final FirebaseDatabase database = MockFirebaseDatabase.instance;
+    final FirebaseDatabase database = MockFirebaseDatabase();
 
     // Build the widget
     await tester.pumpWidget(MaterialApp(

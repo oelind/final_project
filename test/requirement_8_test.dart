@@ -8,7 +8,7 @@ void main() {
   testWidgets('Requirement 8: Real-time log entry with timer', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(

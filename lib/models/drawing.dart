@@ -8,6 +8,7 @@ class Drawing {
   final String effort;
   final DateTime timestamp;
   final Duration timeSpent;
+  final bool wasPromptUsed;
 
   const Drawing({
     this.userId,
@@ -19,6 +20,7 @@ class Drawing {
     required this.effort,
     required this.timestamp,
     required this.timeSpent,
+    this.wasPromptUsed = false,
   });
 
   factory Drawing.fromMap(Map<dynamic, dynamic> data) {
@@ -42,6 +44,7 @@ class Drawing {
       effort: data['effort'] ?? 'Medium',
       timestamp: parsedTimestamp,
       timeSpent: Duration(minutes: data['timeSpentMinutes'] ?? 0),
+      wasPromptUsed: data['wasPromptUsed'] ?? false,
     );
   }
 
@@ -56,6 +59,7 @@ class Drawing {
       'effort': effort,
       'timestamp': timestamp.millisecondsSinceEpoch,
       'timeSpentMinutes': timeSpent.inMinutes,
+      'wasPromptUsed': wasPromptUsed,
     };
   }
 }

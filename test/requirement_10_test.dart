@@ -8,7 +8,7 @@ void main() {
   testWidgets('Requirement 10: Prompt generator displays random prompt', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
     final prompts = ['Apple', 'Banana', 'Cat'];
 
     await tester.pumpWidget(MaterialApp(

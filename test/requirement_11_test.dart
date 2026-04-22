@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   test('Requirement 11: User data stored in Realtime Database', () async {
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
     const uid = 'user_123';
     
     await mockDatabase.ref('users/$uid').set({
@@ -19,7 +19,7 @@ void main() {
   });
 
   test('Requirement 11: Drawing data stored in Realtime Database', () async {
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
     
     await mockDatabase.ref('drawings').push().set({
       'userId': 'user_123',

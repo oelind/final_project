@@ -47,7 +47,7 @@
 
 20. [ ] Please fix the 'firebase fatal error: cannot parse firebase url' or explain what I need to do in my firebase consol settings to fix this.
 
-21. [ ] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist or include tests that cover code not covered by the other file. 
+21. [ ] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are regression tests or include tests that cover code not covered by the other file. 
 
 
 

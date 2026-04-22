@@ -8,7 +8,7 @@ void main() {
   testWidgets('Requirement 9: Goal progress widget shows percentage and progress bar', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     // 1. Set goal to 10 hours
     await mockDatabase.ref('users/test_uid/settings').set({
@@ -42,7 +42,7 @@ void main() {
   testWidgets('Requirement 9: Congratulation message when goal reached', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     // 1. Set goal to 1 hour
     await mockDatabase.ref('users/test_uid/settings').set({
