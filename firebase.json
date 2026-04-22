@@ -2,6 +2,5 @@
 {"android":{"default":{"projectId":"drawinglog-oaks-sye-sp26","appId":"1:779730882356:android:c896c84916c792ff76df61",
 "fileOutput":"android/app/google-services.json"}},
 "dart":{"lib/firebase_options.dart":{"projectId":"drawinglog-oaks-sye-sp26",
-"configurations":{"android":"1:779730882356:android:c896c84916c792ff76df61",
-"ios":"1:779730882356:ios:b862695f3c34e42676df61","macos":"1:779730882356:ios:b862695f3c34e42676df61",
-"web":"1:779730882356:web:64ca666c2772452176df61","windows":"1:779730882356:web:8b79e69bd30e14ce76df61"}}}}}}
+"configurations":{
+"web":"1:779730882356:web:64ca666c2772452176df61"}}}}}}
