@@ -13,7 +13,7 @@ void main() {
 
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
     await tester.pumpAndSettle();

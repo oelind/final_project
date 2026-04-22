@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   test('Requirement 7: Data isolation - User A cannot see User B\'s drawings', () async {
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
     
     // User A logs a drawing
     await mockDatabase.ref('drawings').push().set({

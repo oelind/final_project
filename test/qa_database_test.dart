@@ -12,7 +12,7 @@ void main() {
   late MockFirebaseAuth auth;
 
   setUp(() {
-    database = MockFirebaseDatabase.instance;
+    database = MockFirebaseDatabase();
     auth = MockFirebaseAuth();
   });
 

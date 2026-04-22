@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Verify drawing log entries persist between logins', (WidgetTester tester) async {
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',
@@ -52,6 +52,7 @@ void main() {
 
     // Verify it appeared on the home screen
     // We might need an extra pump for StreamBuilder
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Drawing'), findsOneWidget);
 
@@ -71,12 +72,13 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify the drawing entry is still there
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Drawing'), findsOneWidget);
   });
 
   testWidgets('Verify drawing log entries persist during page switches', (WidgetTester tester) async {
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',
@@ -109,6 +111,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify drawing is visible on Home Screen
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Page Switch Test'), findsOneWidget);
 
@@ -126,6 +129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify the drawing entry is still visible
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Page Switch Test'), findsOneWidget);
   });

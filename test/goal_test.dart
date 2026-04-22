@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Verify goal creation and saving from settings button', (WidgetTester tester) async {
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',

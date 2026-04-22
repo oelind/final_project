@@ -8,7 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 void main() {
   testWidgets('Verify drawing log entries persist after app "restart"', (WidgetTester tester) async {
     // 1. Setup persistent mock instances
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(
       isAnonymous: false,
       uid: 'persistent_user_id',
@@ -39,6 +39,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify it's visible
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Entry'), findsOneWidget);
 
@@ -59,7 +60,8 @@ void main() {
     // The LoginPage should auto-navigate because user is still signed in
     await tester.pumpAndSettle();
     
-    // Extra pump for StreamBuilder
+    // Extra pumps for StreamBuilder
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     
     expect(find.text('Persistent Entry'), findsOneWidget);

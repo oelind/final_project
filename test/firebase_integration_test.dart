@@ -10,7 +10,7 @@ void main() {
   late FirebaseDatabase mockDatabase;
 
   setUp(() {
-    mockDatabase = MockFirebaseDatabase.instance;
+    mockDatabase = MockFirebaseDatabase();
     mockAuth = MockFirebaseAuth();
   });
 
@@ -62,7 +62,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextField).first, '15.0');
-    await tester.tap(find.text('Save & Continue'));
+    final saveButton = find.text('Save & Continue');
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
     await tester.pumpAndSettle();
     
     // Close success dialog
@@ -84,7 +86,8 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    // Extra pump for StreamBuilder
+    // Extra pumps for StreamBuilder and animations
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Firebase Masterpiece'), findsOneWidget);
 
@@ -112,6 +115,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify data still present
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Firebase Masterpiece'), findsOneWidget);
   });

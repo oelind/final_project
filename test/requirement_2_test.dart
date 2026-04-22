@@ -8,7 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 void main() {
   testWidgets('Requirement 2: User is prompted for weekly/daily drawing goals', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth(signedIn: true);
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
     await tester.pumpAndSettle();

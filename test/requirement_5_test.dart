@@ -9,7 +9,7 @@ void main() {
   testWidgets('Requirement 5: Home screen displays "Record first entry" when empty', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(home: HomeScreen(auth: mockAuth, database: mockDatabase)));
     await tester.pumpAndSettle();
@@ -27,7 +27,7 @@ void main() {
   testWidgets('Requirement 5: Log dialog fields and save button', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(

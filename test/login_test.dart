@@ -13,7 +13,7 @@ void main() {
       email: 'user1@example.com',
     );
     final mockAuth = MockFirebaseAuth(mockUser: user);
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,

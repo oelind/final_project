@@ -10,7 +10,7 @@ void main() {
   late FirebaseDatabase mockDatabase;
 
   setUp(() {
-    mockDatabase = MockFirebaseDatabase.instance;
+    mockDatabase = MockFirebaseDatabase();
   });
 
   testWidgets('Junior QA Test: Login with correct info works', (WidgetTester tester) async {

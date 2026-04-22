@@ -8,7 +8,7 @@ void main() {
   testWidgets('Requirement 6: Buttons on home screen and settings dropdown', (WidgetTester tester) async {
     final user = MockUser(uid: 'test_uid');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(home: HomeScreen(auth: mockAuth, database: mockDatabase)));
     await tester.pumpAndSettle();

@@ -8,7 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 void main() {
   testWidgets('Requirement 1: Login screen has option to create an account', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth();
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     
     await tester.pumpWidget(DrawingLogApp(auth: mockAuth, database: mockDatabase));
     expect(find.text('Don\'t have an account? Create one'), findsOneWidget);
@@ -26,7 +26,7 @@ void main() {
       email: 'user1@example.com',
     );
     final mockAuth = MockFirebaseAuth(mockUser: user);
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,

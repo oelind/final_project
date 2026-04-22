@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
     final effectiveDatabase = database ?? FirebaseDatabase.instance;
-    final user = effectiveAuth.currentUser;
+   // final user = effectiveAuth.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,6 +103,8 @@ class HomeScreen extends StatelessWidget {
             child: StreamBuilder<DatabaseEvent>(
               stream: effectiveDatabase.ref('drawings').onValue,
               builder: (context, snapshot) {
+                final user = effectiveAuth.currentUser;
+
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
@@ -113,9 +115,28 @@ class HomeScreen extends StatelessWidget {
 
                 final List<Drawing> drawings = [];
                 if (snapshot.data?.snapshot.value != null) {
-                  final drawingsMap = Map<dynamic, dynamic>.from(snapshot.data!.snapshot.value as Map);
+                  final dynamic value = snapshot.data!.snapshot.value;
+                  
+                  Map<dynamic, dynamic> drawingsMap;
+                  if (value is Map) {
+                    drawingsMap = Map<dynamic, dynamic>.from(value);
+                  } else if (value is List) {
+                    // Handle case where Firebase returns a List
+                    drawingsMap = {};
+                    for (int i = 0; i < value.length; i++) {
+                      if (value[i] != null) {
+                        drawingsMap[i.toString()] = value[i];
+                      }
+                    }
+                  } else {
+                    drawingsMap = {};
+                  }
+                  
                   final allDrawings = drawingsMap.values
-                      .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map)));
+                      .map((data) {
+                        final d = Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map));
+                        return d;
+                      }).toList();
                   
                   // Filter by userId in-memory
                   drawings.addAll(allDrawings.where((d) => d.userId == user?.uid));

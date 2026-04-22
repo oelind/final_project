@@ -9,7 +9,7 @@ import 'package:final_project/goal_setup_screen.dart';
 void main() {
   testWidgets('Verify user goal persists after app "restart"', (WidgetTester tester) async {
     // 1. Setup persistent mock instances
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(
       isAnonymous: false,
       uid: 'goal_user_id',
@@ -65,7 +65,7 @@ void main() {
   });
 
   testWidgets('Verify daily goal also persists', (WidgetTester tester) async {
-    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
     final user = MockUser(uid: 'daily_user');
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
 
