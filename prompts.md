@@ -45,9 +45,11 @@
 
 19. [x] Please make sure the firebase real time database is integrated with this project instead of firestore. Essentially swap out firestore for real time database through firebase and unintegrate firestore. Check that prompt 15 is also properly fufilled with this change in data storage location in firebase. Also keep the firebase authentication code if it works properly.
 
-20. [ ] Please fix the 'firebase fatal error: cannot parse firebase url' or explain what I need to do in my firebase consol settings to fix this.
+<!--https://blog.markdowntools.com/posts/how-to-add-comments-in-markdown also I mannually entered this into the gemini cli so the two x's are to show that-->
+20. [xx] Please fix the 'firebase fatal error: cannot parse firebase url' or explain what I need to do in my firebase consol settings to fix this.
 
-21. [ ] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are regression tests or include tests that cover code not covered by the other file. 
+<!-- I had gemini run this but I interrupted at the end of not allowing it to delete all files but it was run-->
+21. [ x-] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist or include tests that cover code not covered by the other file. 
 
 
 
