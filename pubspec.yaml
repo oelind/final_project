@@ -37,14 +37,12 @@ dependencies:
   intl: ^0.20.2
   firebase_core: any
   firebase_auth: any
-  cloud_firestore: any
   firebase_database: ^12.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   firebase_auth_mocks: any
-  fake_cloud_firestore: any
   firebase_database_mocks: any
 
   # The "flutter_lints" package below contains a set of recommended lints to

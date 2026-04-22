@@ -8,7 +8,7 @@ import 'package:final_project/goal_setup_screen.dart';
 import 'package:final_project/widgets/prompt_generator_widget.dart';
 
 void main() {
-  late MockFirebaseDatabase database;
+  late FirebaseDatabase database;
   late MockFirebaseAuth auth;
 
   setUp(() {
@@ -35,20 +35,16 @@ void main() {
       });
 
       // Verify User A only sees their drawings
-      final snapshotA = await database.ref('drawings')
-          .orderByChild('userId')
-          .equalTo('user_a')
-          .get();
-      final dataA = snapshotA.value as Map;
+      final snapshotA = await database.ref('drawings').get();
+      final allDataA = snapshotA.value as Map? ?? {};
+      final dataA = Map.from(allDataA)..removeWhere((k, v) => v['userId'] != 'user_a');
       expect(dataA.length, 1);
       expect(dataA.values.first['title'], 'A\'s Art');
 
       // Verify User B only sees their drawings
-      final snapshotB = await database.ref('drawings')
-          .orderByChild('userId')
-          .equalTo('user_b')
-          .get();
-      final dataB = snapshotB.value as Map;
+      final snapshotB = await database.ref('drawings').get();
+      final allDataB = snapshotB.value as Map? ?? {};
+      final dataB = Map.from(allDataB)..removeWhere((k, v) => v['userId'] != 'user_b');
       expect(dataB.length, 1);
       expect(dataB.values.first['title'], 'B\'s Art');
     });
@@ -175,11 +171,9 @@ void main() {
         });
       }
 
-      final snapshot = await database.ref('drawings')
-          .orderByChild('userId')
-          .equalTo(uid)
-          .get();
-      final data = snapshot.value as Map;
+      final snapshot = await database.ref('drawings').get();
+      final allData = snapshot.value as Map? ?? {};
+      final data = Map.from(allData)..removeWhere((k, v) => v['userId'] != uid);
       expect(data.length, count);
     });
    group('Database-Specific Integration Tests', () {

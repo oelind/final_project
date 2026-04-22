@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/widgets/prompt_generator_widget.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('PromptGeneratorWidget should load and generate random prompts', (WidgetTester tester) async {
+    final auth = MockFirebaseAuth();
+    final FirebaseDatabase database = MockFirebaseDatabase.instance;
+
     // Build the widget
-    await tester.pumpWidget(const MaterialApp(
+    await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: PromptGeneratorWidget(),
+        body: PromptGeneratorWidget(
+          auth: auth,
+          database: database,
+        ),
       ),
     ));
 

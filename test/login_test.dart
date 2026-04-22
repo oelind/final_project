@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Successful login navigates to home screen', (WidgetTester tester) async {
@@ -12,11 +13,11 @@ void main() {
       email: 'user1@example.com',
     );
     final mockAuth = MockFirebaseAuth(mockUser: user);
-    final fakeFirestore = FakeFirebaseFirestore();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: fakeFirestore,
+      database: mockDatabase,
     ));
 
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'user1@example.com');

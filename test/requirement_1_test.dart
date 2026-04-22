@@ -3,12 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Requirement 1: Login screen has option to create an account', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     
-    await tester.pumpWidget(DrawingLogApp(auth: mockAuth));
+    await tester.pumpWidget(DrawingLogApp(auth: mockAuth, database: mockDatabase));
     expect(find.text('Don\'t have an account? Create one'), findsOneWidget);
 
     await tester.tap(find.text('Don\'t have an account? Create one'));
@@ -24,7 +26,7 @@ void main() {
       email: 'user1@example.com',
     );
     final mockAuth = MockFirebaseAuth(mockUser: user);
-    final mockDatabase = MockFirebaseDatabase.instance;
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Verify drawing log entries persist between logins', (WidgetTester tester) async {
-    final mockFirestore = FakeFirebaseFirestore();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',
@@ -20,7 +20,7 @@ void main() {
     // 1. Initial login
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Test Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -52,11 +52,11 @@ void main() {
 
     // Verify it appeared on the home screen
     // We might need an extra pump for StreamBuilder
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Drawing'), findsOneWidget);
 
     // 3. Sign out
-    await tester.tap(find.byIcon(Icons.settings));
+    await tester.tap(find.widgetWithIcon(IconButton, Icons.settings));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sign Out'));
     await tester.pumpAndSettle();
@@ -71,12 +71,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify the drawing entry is still there
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Drawing'), findsOneWidget);
   });
 
   testWidgets('Verify drawing log entries persist during page switches', (WidgetTester tester) async {
-    final mockFirestore = FakeFirebaseFirestore();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',
@@ -84,20 +84,20 @@ void main() {
     );
     final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: false);
 
-    // Add a drawing to firestore directly for this test
-    await mockFirestore.collection('drawings').add({
+    // Add a drawing to database directly for this test
+    await mockDatabase.ref('drawings').push().set({
       'userId': 'test_user_id',
       'title': 'Page Switch Test',
       'description': 'Testing navigation persistence',
       'timeSpentMinutes': 45,
       'effort': 'High',
-      'timestamp': Timestamp.fromDate(DateTime.now()),
-      'createdAt': FieldValue.serverTimestamp(),
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'createdAt': ServerValue.timestamp,
     });
 
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Test Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -109,11 +109,11 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify drawing is visible on Home Screen
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Page Switch Test'), findsOneWidget);
 
     // Navigate to Goal Setup Screen
-    await tester.tap(find.byIcon(Icons.settings));
+    await tester.tap(find.widgetWithIcon(IconButton, Icons.settings));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Edit Goal'));
     await tester.pumpAndSettle();
@@ -126,7 +126,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify the drawing entry is still visible
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Page Switch Test'), findsOneWidget);
   });
 }

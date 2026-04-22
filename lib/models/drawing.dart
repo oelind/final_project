@@ -1,4 +1,5 @@
 class Drawing {
+  final String? userId;
   final String title;
   final String description;
   final List<String> colors;
@@ -9,6 +10,7 @@ class Drawing {
   final Duration timeSpent;
 
   const Drawing({
+    this.userId,
     required this.title,
     required this.description,
     required this.colors,
@@ -31,6 +33,7 @@ class Drawing {
     }
 
     return Drawing(
+      userId: data['userId'],
       title: data['title'] ?? 'Untitled',
       description: data['description'] ?? '',
       colors: List<String>.from(data['colors'] ?? []),
@@ -44,6 +47,7 @@ class Drawing {
 
   Map<String, dynamic> toMap() {
     return {
+      'userId': userId,
       'title': title,
       'description': description,
       'colors': colors,

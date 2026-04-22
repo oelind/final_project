@@ -101,10 +101,7 @@ class HomeScreen extends StatelessWidget {
           GoalProgressWidget(auth: effectiveAuth, database: effectiveDatabase),
           Expanded(
             child: StreamBuilder<DatabaseEvent>(
-              stream: effectiveDatabase.ref('drawings')
-                  .orderByChild('userId')
-                  .equalTo(user?.uid)
-                  .onValue,
+              stream: effectiveDatabase.ref('drawings').onValue,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
@@ -117,8 +114,11 @@ class HomeScreen extends StatelessWidget {
                 final List<Drawing> drawings = [];
                 if (snapshot.data?.snapshot.value != null) {
                   final drawingsMap = Map<dynamic, dynamic>.from(snapshot.data!.snapshot.value as Map);
-                  drawings.addAll(drawingsMap.values
-                      .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map))));
+                  final allDrawings = drawingsMap.values
+                      .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map)));
+                  
+                  // Filter by userId in-memory
+                  drawings.addAll(allDrawings.where((d) => d.userId == user?.uid));
                   
                   // Sort by timestamp descending
                   drawings.sort((a, b) => b.timestamp.compareTo(a.timestamp));

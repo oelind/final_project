@@ -3,10 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   late MockFirebaseAuth mockAuth;
-  late MockFirebaseDatabase mockDatabase;
+  late FirebaseDatabase mockDatabase;
 
   setUp(() {
     mockDatabase = MockFirebaseDatabase.instance;

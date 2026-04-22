@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Verify drawing log entries persist after app "restart"', (WidgetTester tester) async {
     // 1. Setup persistent mock instances
-    final mockFirestore = FakeFirebaseFirestore();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     final user = MockUser(
       isAnonymous: false,
       uid: 'persistent_user_id',
@@ -18,7 +19,7 @@ void main() {
     // 2. "First Run": Add a drawing log
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Test Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -38,18 +39,18 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify it's visible
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Persistent Entry'), findsOneWidget);
 
     // 3. "Shutdown": Clear the widget tree
     await tester.pumpWidget(Container());
     await tester.pumpAndSettle();
 
-    // 4. "Restart": Rebuild the app with the same mockFirestore instance
-    // Note: We use the same mockFirestore but a "new" app instance
+    // 4. "Restart": Rebuild the app with the same mockDatabase instance
+    // Note: We use the same mockDatabase but a "new" app instance
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Test Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -59,16 +60,15 @@ void main() {
     await tester.pumpAndSettle();
     
     // Extra pump for StreamBuilder
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     
     expect(find.text('Persistent Entry'), findsOneWidget);
     
-    // 6. Double-check directly in Firestore
-    final drawings = await mockFirestore
-        .collection('drawings')
-        .where('userId', isEqualTo: 'persistent_user_id')
-        .get();
-    expect(drawings.docs.length, 1);
-    expect(drawings.docs.first['title'], 'Persistent Entry');
+    // 6. Double-check directly in Database
+    final snapshot = await mockDatabase.ref('drawings').get();
+    final allDrawings = snapshot.value as Map? ?? {};
+    final drawings = Map.from(allDrawings)..removeWhere((k, v) => v['userId'] != 'persistent_user_id');
+    expect(drawings.length, 1);
+    expect(drawings.values.first['title'], 'Persistent Entry');
   });
 }

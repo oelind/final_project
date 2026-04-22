@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Verify goal creation and saving from settings button', (WidgetTester tester) async {
-    final mockFirestore = FakeFirebaseFirestore();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase.instance;
     final user = MockUser(
       isAnonymous: false,
       uid: 'test_user_id',
@@ -17,7 +18,7 @@ void main() {
     // Build the app
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth, 
-      firestore: mockFirestore,
+      database: mockDatabase,
       initialPrompts: ['Test Prompt'],
     ));
     await tester.pumpAndSettle();
@@ -50,10 +51,10 @@ void main() {
     // 6. Verify we are back on Home Screen (Requirement 12)
     expect(find.text('Drawing Log'), findsOneWidget);
 
-    // 7. Verify Firestore data
-    final userDoc = await mockFirestore.collection('users').doc('test_user_id').get();
-    expect(userDoc.exists, true);
-    final settings = userDoc.data()?['settings'];
+    // 7. Verify Database data
+    final snapshot = await mockDatabase.ref('users/test_user_id/settings').get();
+    expect(snapshot.exists, true);
+    final settings = snapshot.value as Map;
     expect(settings['timeGoal'], 10.5);
   });
 }

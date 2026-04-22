@@ -23,22 +23,18 @@ void main() {
     });
 
     // Query for User A
-    final snapshotA = await mockDatabase.ref('drawings')
-        .orderByChild('userId')
-        .equalTo('user_a')
-        .get();
+    final snapshotA = await mockDatabase.ref('drawings').get();
+    final allDrawingsA = snapshotA.value as Map? ?? {};
+    final drawingsA = Map.from(allDrawingsA)..removeWhere((k, v) => v['userId'] != 'user_a');
     
-    final drawingsA = snapshotA.value as Map;
     expect(drawingsA.length, 1);
     expect(drawingsA.values.first['title'], 'A\'s Art');
 
     // Query for User B
-    final snapshotB = await mockDatabase.ref('drawings')
-        .orderByChild('userId')
-        .equalTo('user_b')
-        .get();
+    final snapshotB = await mockDatabase.ref('drawings').get();
+    final allDrawingsB = snapshotB.value as Map? ?? {};
+    final drawingsB = Map.from(allDrawingsB)..removeWhere((k, v) => v['userId'] != 'user_b');
     
-    final drawingsB = snapshotB.value as Map;
     expect(drawingsB.length, 1);
     expect(drawingsB.values.first['title'], 'B\'s Art');
   });

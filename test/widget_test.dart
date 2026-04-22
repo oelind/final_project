@@ -1,17 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:final_project/app.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   testWidgets('Login screen smoke test', (WidgetTester tester) async {
     final mockAuth = MockFirebaseAuth();
-    final fakeFirestore = FakeFirebaseFirestore();
+    final mockDatabase = MockFirebaseDatabase.instance;
     
     // Build our app and trigger a frame.
     await tester.pumpWidget(DrawingLogApp(
       auth: mockAuth,
-      firestore: fakeFirestore,
+      database: mockDatabase,
     ));
 
     // Verify that the login screen is shown.

@@ -4,20 +4,21 @@ import 'package:final_project/home_screen.dart';
 import 'package:final_project/goal_setup_screen.dart';
 import 'package:final_project/widgets/drawing_log_dialog.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_database_mocks/firebase_database_mocks.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   late MockFirebaseAuth mockAuth;
-  late FakeFirebaseFirestore mockFirestore;
+  late FirebaseDatabase mockDatabase;
 
   setUp(() {
     mockAuth = MockFirebaseAuth(signedIn: true);
-    mockFirestore = FakeFirebaseFirestore();
+    mockDatabase = MockFirebaseDatabase.instance;
   });
 
   testWidgets('Home Screen UI: Empty state shows record button', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: HomeScreen(auth: mockAuth, firestore: mockFirestore),
+      home: HomeScreen(auth: mockAuth, database: mockDatabase),
     ));
     await tester.pumpAndSettle();
 
@@ -30,7 +31,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: HomeScreen(
         auth: mockAuth, 
-        firestore: mockFirestore,
+        database: mockDatabase,
         initialPrompts: ['Test Prompt'],
       ),
     ));
@@ -52,7 +53,7 @@ void main() {
           builder: (context) => ElevatedButton(
             onPressed: () => showDialog(
               context: context,
-              builder: (context) => DrawingLogDialog(auth: mockAuth, firestore: mockFirestore),
+              builder: (context) => DrawingLogDialog(auth: mockAuth, database: mockDatabase),
             ),
             child: const Text('Open Dialog'),
           ),
@@ -82,15 +83,16 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    // Verify drawing is in Firestore
-    final drawings = await mockFirestore.collection('drawings').get();
-    expect(drawings.docs.length, 1);
-    expect(drawings.docs.first['title'], 'My Masterpiece');
-    expect(drawings.docs.first['timeSpentMinutes'], 90);
+    // Verify drawing is in Database
+    final snapshot = await mockDatabase.ref('drawings').get();
+    final data = snapshot.value as Map;
+    expect(data.length, 1);
+    expect(data.values.first['title'], 'My Masterpiece');
+    expect(data.values.first['timeSpentMinutes'], 90);
   });
 
   testWidgets('Goal Setup Screen: Buttons and Toggles', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: GoalSetupScreen()));
+    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
 
     // Toggle Goal Type
     await tester.tap(find.text('Daily'));

@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   late MockFirebaseAuth mockAuth;
-  late MockFirebaseDatabase mockDatabase;
+  late FirebaseDatabase mockDatabase;
 
   setUp(() {
     mockDatabase = MockFirebaseDatabase.instance;
@@ -15,8 +15,8 @@ void main() {
   });
 
   testWidgets('Full Firebase Integration Flow: Signup, Login, Settings, and Logs', (WidgetTester tester) async {
-    // Set a larger window size to avoid overflow and hit test issues
-    tester.view.physicalSize = const Size(1200, 800);
+    // Set a standard window size to avoid overflow and hit test issues
+    tester.view.physicalSize = const Size(800, 600);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
@@ -46,16 +46,18 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'newuser@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
     await tester.tap(find.text('Login'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
 
     // Verify Home Screen
     expect(find.text('Drawing Log'), findsOneWidget);
     final userId = mockAuth.currentUser!.uid;
 
     // 5. Save Settings (Goal)
-    await tester.tap(find.byIcon(Icons.settings).first);
-    await tester.pumpAndSettle();
+    // Find the settings button in the AppBar
+    final settingsButton = find.widgetWithIcon(IconButton, Icons.settings);
+    await tester.tap(settingsButton);
+    await tester.pumpAndSettle(); // Wait for popup menu
+    
     await tester.tap(find.text('Edit Goal'));
     await tester.pumpAndSettle();
 
@@ -83,21 +85,20 @@ void main() {
     await tester.pumpAndSettle();
 
     // Extra pump for StreamBuilder
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Firebase Masterpiece'), findsOneWidget);
 
     // Verify Drawing in Database
-    final drawingsSnapshot = await mockDatabase.ref('drawings')
-        .orderByChild('userId')
-        .equalTo(userId)
-        .get();
-    final drawingsData = drawingsSnapshot.value as Map;
+    final drawingsSnapshot = await mockDatabase.ref('drawings').get();
+    final allDrawings = drawingsSnapshot.value as Map? ?? {};
+    final drawingsData = Map.from(allDrawings)..removeWhere((k, v) => v['userId'] != userId);
+    
     expect(drawingsData.length, 1);
     expect(drawingsData.values.first['title'], 'Firebase Masterpiece');
     expect(drawingsData.values.first['timeSpentMinutes'], 120);
 
     // 7. Sign Out and Verify Persistence
-    await tester.tap(find.byIcon(Icons.settings).first);
+    await tester.tap(find.widgetWithIcon(IconButton, Icons.settings));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sign Out'));
     await tester.pumpAndSettle();
@@ -108,11 +109,10 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Email'), 'newuser@example.com');
     await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
     await tester.tap(find.text('Login'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
 
     // Verify data still present
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Firebase Masterpiece'), findsOneWidget);
   });
 }
