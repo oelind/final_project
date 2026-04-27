@@ -57,7 +57,14 @@
 
 
 
+
+
+
 ** Development Rules **
 
 1. Always commit the current code before implimenting a new feature that has a commit
 message that is a summary of the changes made since the last commit.
+
+2. Always add/ upload new features to the realtime database.
+
+3. Always add and generate tests and unit tests for every requirment.
