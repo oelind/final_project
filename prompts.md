@@ -61,11 +61,16 @@
 
 26. [ ] Use the following hex codes for the theme/ coloring of the app as if you were an intermediate web app designer #B1CFA0, #452741, #B9DACE, #154956, #754743 
 
+27. [ ] Check that the database import is properly implimented in requirment_11_test.dart and requirment_7_test.dart if the databse needs to be implimented and if it doesnt remove the unused import. Also resolve the error in the firbase.json file about the property flutter not being allowed in a way that everything still works properly/ as initially intended.
+
+28. [ ] Add fuzzing tests to try to find if there are any cases that need to be added to the tests. If any errors or corner cases are found fix the code and add the corner cases to the tests. 
+
+29. [ ] Add regression tests to all files containing tests and check that the app passes all current tests. If any tests are not passed fix the code until all tests are passed.
 
 
-29. [ ] Impliment requirment 12 from the requirments.md file formatted simmilarly to a mad libs or to have multiple buttons one for several descriptors to randomly select one. Also so each button for each word to form a sentence are independent of eachother. Specifically the sentence form should be similar to ' draw a *insert random sub-topic like nature/ buildings* with *more specific part of a type of nouns* in the particular style *insert style like realism/ very minamal details/ cartoonish* ' or to have various descriptors that are independently randomly generated that in the end are to formulate a sentence of a more specific drawing prompt that the other randomt drawing prompt generator implimented in this app. Like in the example the italic portions are where a random generator for a noun, and then the next is an adjective for the noun, then a particular verb past or present tense for the previous, and then in a setting of sorts (or etc.)
+30. [ ] Impliment requirment 12 from the requirments.md file formatted simmilarly to a mad libs or to have multiple buttons one for several descriptors to randomly select one. Also so each button for each word to form a sentence are independent of eachother. Specifically the sentence form should be similar to ' draw a *insert random sub-topic like nature/ buildings* with *more specific part of a type of nouns* in the particular style *insert style like realism/ very minamal details/ cartoonish* ' or to have various descriptors that are independently randomly generated that in the end are to formulate a sentence of a more specific drawing prompt that the other randomt drawing prompt generator implimented in this app. Like in the example the italic portions are where a random generator for a noun, and then the next is an adjective for the noun, then a particular verb past or present tense for the previous, and then in a setting of sorts (or etc.)
 
-30. [ ] Impliment requirment 13 from the requirments.md file
+31. [ ] Impliment requirment 13 from the requirments.md file
 
 
 
