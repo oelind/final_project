@@ -58,7 +58,7 @@ I used because I was a lil confused on the purpose of this document-->
 12. Have another random generator that uses lists of various discriptors of actions for a prompt (like specific style to draw in/ media used/ in color or not/ landscape or portrait orientation,etc,)
 
 
-13. At end of week give user summary on number of drawings/ avg amount of time spent on each drawing/ if prompts from lift were used/ if prompt generator button was pressed
+13. At end of week give user summary on number of drawings total they did that week, average amount of time spent on each drawing, total amount of times both types of prompt generators were pressed, average amount of effort per drawing, and average amount of drawings completed each day.
 
 
 
