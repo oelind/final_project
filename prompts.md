@@ -53,6 +53,14 @@
 
 22. [x] If needed upload/ save drawing logs and user goal information is a json file unique to each user and then use that file to store their data in the reat time database. And to then every time a new log entry is submitted to reupload the changes to the json file with the database. Do what is needed to actually store data in the realtime database and if there is something in settings for the database that is preventing the success tell me
 
+23. [ ] Add tests that check if users data is being properly stored in the real time database like log entries but also that their set goal is too. 
+
+24. [ ] Check that the user goal is being added to the user json file as well as being updated every time the user changes it. 
+
+25. [ ] Also check that all currently implimented features are in the realtime database.
+
+26. [ ] Use the following hex codes for the theme/ coloring of the app as if you were an intermediate web app designer #B1CFA0, #452741, #B9DACE, #154956, #754743 
+
 
 
 
