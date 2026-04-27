@@ -19,7 +19,7 @@ void main() {
   group('QA Database Integration - Data Integrity & Isolation', () {
     test('User isolation: User A cannot see User B\'s drawings', () async {
       // User A logs a drawing
-      await database.ref('drawings').push().set({
+      await database.ref('users/user_a/drawings').push().set({
         'userId': 'user_a',
         'title': 'A\'s Art',
         'timeSpentMinutes': 30,
@@ -27,7 +27,7 @@ void main() {
       });
 
       // User B logs a drawing
-      await database.ref('drawings').push().set({
+      await database.ref('users/user_b/drawings').push().set({
         'userId': 'user_b',
         'title': 'B\'s Art',
         'timeSpentMinutes': 60,
@@ -35,16 +35,14 @@ void main() {
       });
 
       // Verify User A only sees their drawings
-      final snapshotA = await database.ref('drawings').get();
-      final allDataA = snapshotA.value as Map? ?? {};
-      final dataA = Map.from(allDataA)..removeWhere((k, v) => v['userId'] != 'user_a');
+      final snapshotA = await database.ref('users/user_a/drawings').get();
+      final dataA = snapshotA.value as Map? ?? {};
       expect(dataA.length, 1);
       expect(dataA.values.first['title'], 'A\'s Art');
 
       // Verify User B only sees their drawings
-      final snapshotB = await database.ref('drawings').get();
-      final allDataB = snapshotB.value as Map? ?? {};
-      final dataB = Map.from(allDataB)..removeWhere((k, v) => v['userId'] != 'user_b');
+      final snapshotB = await database.ref('users/user_b/drawings').get();
+      final dataB = snapshotB.value as Map? ?? {};
       expect(dataB.length, 1);
       expect(dataB.values.first['title'], 'B\'s Art');
     });
@@ -163,7 +161,7 @@ void main() {
       const count = 20;
 
       for (int i = 0; i < count; i++) {
-        await database.ref('drawings').push().set({
+        await database.ref('users/$uid/drawings').push().set({
           'userId': uid,
           'title': 'Drawing $i',
           'timeSpentMinutes': 5,
@@ -171,9 +169,8 @@ void main() {
         });
       }
 
-      final snapshot = await database.ref('drawings').get();
-      final allData = snapshot.value as Map? ?? {};
-      final data = Map.from(allData)..removeWhere((k, v) => v['userId'] != uid);
+      final snapshot = await database.ref('users/$uid/drawings').get();
+      final data = snapshot.value as Map? ?? {};
       expect(data.length, count);
     });
    group('Database-Specific Integration Tests', () {

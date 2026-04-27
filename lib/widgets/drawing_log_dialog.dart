@@ -86,7 +86,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
     final timeInMinutes = double.tryParse(_timeController.text) ?? 0.0;
 
     try {
-      final newDrawingRef = effectiveDatabase.ref('drawings').push();
+      final newDrawingRef = effectiveDatabase.ref('users/${user.uid}/drawings').push();
       await newDrawingRef.set({
         'userId': user.uid,
         'title': _titleController.text.isEmpty ? 'Untitled' : _titleController.text,
@@ -95,6 +95,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
         'effort': _effort,
         'timestamp': _selectedDate.millisecondsSinceEpoch,
         'createdAt': ServerValue.timestamp,
+        'wasPromptUsed': false, // TODO: track this if prompt was used
       });
 
 //case of a drawing log being successfully saved

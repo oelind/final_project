@@ -34,18 +34,29 @@ class GoalProgressWidget extends StatelessWidget {
         if (timeGoal <= 0) return const SizedBox.shrink();
 
         return StreamBuilder<DatabaseEvent>(
-          stream: effectiveDatabase.ref('drawings').onValue,
+          stream: effectiveDatabase.ref('users/${user.uid}/drawings').onValue,
           builder: (context, drawingSnapshot) {
             if (!drawingSnapshot.hasData) return const LinearProgressIndicator();
 
             List<Drawing> drawings = [];
             if (drawingSnapshot.data!.snapshot.value != null) {
-              final drawingsMap = Map<dynamic, dynamic>.from(drawingSnapshot.data!.snapshot.value as Map);
+              final dynamic value = drawingSnapshot.data!.snapshot.value;
+              Map<dynamic, dynamic> drawingsMap;
+              if (value is Map) {
+                drawingsMap = Map<dynamic, dynamic>.from(value);
+              } else if (value is List) {
+                drawingsMap = {};
+                for (int i = 0; i < value.length; i++) {
+                  if (value[i] != null) drawingsMap[i.toString()] = value[i];
+                }
+              } else {
+                drawingsMap = {};
+              }
+
               final allDrawings = drawingsMap.values
                   .map((data) => Drawing.fromMap(Map<dynamic, dynamic>.from(data as Map)));
               
-              // Filter by userId in-memory
-              drawings = allDrawings.where((d) => d.userId == user.uid).toList();
+              drawings = allDrawings.toList();
             }
 
             // Calculate time spent in current period

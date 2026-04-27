@@ -83,8 +83,9 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    // Verify drawing is in Database
-    final snapshot = await mockDatabase.ref('drawings').get();
+    // Verify drawing is in Database under the user's specific node
+    final userId = mockAuth.currentUser!.uid;
+    final snapshot = await mockDatabase.ref('users/$userId/drawings').get();
     final data = snapshot.value as Map;
     expect(data.length, 1);
     expect(data.values.first['title'], 'My Masterpiece');

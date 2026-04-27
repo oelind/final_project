@@ -49,9 +49,9 @@
 20. [xx] Please fix the 'firebase fatal error: cannot parse firebase url' or explain what I need to do in my firebase consol settings to fix this.
 
 <!-- I had gemini run this but I interrupted at the end of not allowing it to delete all files but it was run-->
-21. [ x-] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist or include tests that cover code not covered by the other file. 
+20. [x] If any requirment does not have unit tests for the code related to it generate unit tests for that code with one requirments's tests per file. Remove redundant tests unless they are to check that previous bugs still no longer exist or include tests that cover code not covered by the other file. 
 
-22. [ ] If needed upload/ save drawing logs and user goal information is a json file unique to each user and then use that file to store their data in the reat time database. And to then every time a new log entry is submitted to reupload the changes to the json file with the database. Do what is needed to actually store data in the realtime database and if there is something in settings for the database that is preventing the success tell me
+22. [x] If needed upload/ save drawing logs and user goal information is a json file unique to each user and then use that file to store their data in the reat time database. And to then every time a new log entry is submitted to reupload the changes to the json file with the database. Do what is needed to actually store data in the realtime database and if there is something in settings for the database that is preventing the success tell me
 
 
 

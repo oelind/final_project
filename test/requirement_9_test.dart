@@ -16,8 +16,8 @@ void main() {
       'isWeeklyGoal': true,
     });
 
-    // 2. Log 5 hours (300 minutes)
-    await mockDatabase.ref('drawings').push().set({
+    // 2. Log 5 hours (300 minutes) to user's node
+    await mockDatabase.ref('users/test_uid/drawings').push().set({
       'userId': 'test_uid',
       'title': 'Drawing 1',
       'timeSpentMinutes': 300,
@@ -31,8 +31,9 @@ void main() {
     ));
     await tester.pumpAndSettle();
     
-    // We need an extra pump for the internal StreamBuilder
+    // Extra pumps for the internal StreamBuilders
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('50.0%'), findsOneWidget);
     expect(find.byType(LinearProgressIndicator), findsOneWidget);
@@ -50,8 +51,8 @@ void main() {
       'isWeeklyGoal': true,
     });
 
-    // 2. Log 1 hour (60 minutes)
-    await mockDatabase.ref('drawings').push().set({
+    // 2. Log 1 hour (60 minutes) to user's node
+    await mockDatabase.ref('users/test_uid/drawings').push().set({
       'userId': 'test_uid',
       'title': 'Drawing 1',
       'timeSpentMinutes': 60,
@@ -65,6 +66,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('100.0%'), findsOneWidget);
     expect(find.textContaining('Congratulations!'), findsOneWidget);

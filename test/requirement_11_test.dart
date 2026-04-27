@@ -18,16 +18,18 @@ void main() {
     expect(data['email'], 'user@example.com');
   });
 
-  test('Requirement 11: Drawing data stored in Realtime Database', () async {
+  test('Requirement 11: Drawing data stored in Realtime Database under user node', () async {
     final mockDatabase = MockFirebaseDatabase();
+    const uid = 'user_123';
     
-    await mockDatabase.ref('drawings').push().set({
-      'userId': 'user_123',
+    await mockDatabase.ref('users/$uid/drawings').push().set({
+      'userId': uid,
       'title': 'Firebase Artwork',
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
 
-    final snapshot = await mockDatabase.ref('drawings').get();
+    final snapshot = await mockDatabase.ref('users/$uid/drawings').get();
+    expect(snapshot.exists, true);
     final data = snapshot.value as Map;
     expect(data.length, 1);
     expect(data.values.first['title'], 'Firebase Artwork');

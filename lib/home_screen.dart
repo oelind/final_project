@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
     final effectiveDatabase = database ?? FirebaseDatabase.instance;
-   // final user = effectiveAuth.currentUser;
+    final user = effectiveAuth.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -101,7 +101,9 @@ class HomeScreen extends StatelessWidget {
           GoalProgressWidget(auth: effectiveAuth, database: effectiveDatabase),
           Expanded(
             child: StreamBuilder<DatabaseEvent>(
-              stream: effectiveDatabase.ref('drawings').onValue,
+              stream: user != null 
+                  ? effectiveDatabase.ref('users/${user.uid}/drawings').onValue
+                  : const Stream.empty(),
               builder: (context, snapshot) {
                 final user = effectiveAuth.currentUser;
 
