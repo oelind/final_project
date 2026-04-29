@@ -73,8 +73,11 @@
 
 30. [ ] Impliment requirment 12 from the requirments.md file formatted simmilarly to a mad libs or to have multiple buttons one for several descriptors to randomly select one. Also so each button for each word to form a sentence are independent of eachother. Specifically the sentence form should be similar to ' draw a *insert random sub-topic like nature/ buildings* with *more specific part of a type of nouns* in the particular style *insert style like realism/ very minamal details/ cartoonish* ' or to have various descriptors that are independently randomly generated that in the end are to formulate a sentence of a more specific drawing prompt that the other randomt drawing prompt generator implimented in this app. Like in the example the italic portions are where a random generator for a noun, and then the next is an adjective for the noun, then a particular verb past or present tense for the previous, and then in a setting of sorts (or etc.)
 
+
+31. [ ] Add more object propmpts to the single prompt generator's object_prompts.txt file similar to what is already in it but no repeats please.
+
 <!--
-31. [ ] Impliment requirment 13 from the requirments.md file
+32. [ ] Impliment requirment 13 from the requirments.md file
 
 -->
 
