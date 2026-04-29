@@ -66,6 +66,34 @@ void main() {
       expect(drawing.timestamp.difference(now).inSeconds.abs(), lessThan(2));
     });
 
+    test('Data Integrity: Drawing model handles corrupted/malformed data (Fuzzing corner cases)', () {
+      final malformedData = {
+        'title': 123, // int instead of String
+        'timeSpentMinutes': '45', // String instead of int
+        'colors': 'red, green', // String instead of List
+        'timestamp': 'not a date',
+        'wasPromptUsed': 'yes', // String instead of bool
+      };
+
+      final drawing = Drawing.fromMap(malformedData);
+
+      expect(drawing.title, '123');
+      expect(drawing.timeSpent.inMinutes, 45);
+      expect(drawing.colors, isEmpty);
+      expect(drawing.wasPromptUsed, false);
+      expect(drawing.timestamp, isA<DateTime>());
+    });
+
+    test('Data Integrity: Drawing model handles extreme values (Fuzzing corner cases)', () {
+      final extremeData = {
+        'timeSpentMinutes': double.infinity,
+      };
+
+      final drawing = Drawing.fromMap(extremeData);
+
+      expect(drawing.timeSpent.inMinutes, 0);
+    });
+
     test('Settings Persistence: User settings are correctly merged and retrieved', () async {
       const uid = 'user_789';
       
