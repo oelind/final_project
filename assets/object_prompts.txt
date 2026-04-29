@@ -15,21 +15,49 @@ nature
 --buttercup
 --dandilion
 --cherry blossom
+--sunflower
+--orchid
+--peony
+--daisy
+--lavender
+--dahlia
+--hibiscus
+--jasmine
+--snapdragon
+--carnation
 -herbs
 --mint
 --lavender
+--rosemary
+--thyme
+--basil
+--parsley
+--sage
+--cilantro
+--oregano
 -garden
 
 -leaf
 --ivy
 --maple
 --oak
---tulip 
+--tulip
+--fern
+--palm
+--ginkgo
+--clover
 
 -tree 
 --birch
 --oak
 --tulip
+--willow
+--pine
+--sequoia
+--baobab
+--bonsai
+--mangrove
+--cedar
 -bush
 -hedge
 -mushrooms
@@ -41,7 +69,7 @@ nature
 animal
 -cat
 -cow
--squirel (definetly very misspelled)
+-squirrel
 -fish
 -dog
 -lizard
@@ -61,7 +89,6 @@ animal
 -wombat
 -kangaroo
 -cobra
--tornado
 -dinosaur
 -llama
 -alpaca
@@ -81,6 +108,12 @@ animal
 --eagle
 --egg
 --flamingo
+--owl
+--penguin
+--hummingbird
+--swan
+--peacock
+--woodpecker
 -bat
 -spider
 -tarantula
@@ -120,6 +153,18 @@ animal
 -crayfish
 -lobster
 -horseshoe crab
+-elephant
+-giraffe
+-zebra
+-rhino
+-hippopotamus
+-platypus
+-sloth
+-otter
+-badger
+-hedgehog
+-walrus
+-seal
 
 
 food
@@ -139,13 +184,22 @@ food
 --blueberry
 --banana
 --pineapple
---madarin orange
---
+--mandarin orange
+--mango
+--peach
+--pear
+--pomegranate
+--lemon
+--lime
+--avocado
+--coconut
+--dragonfruit
+--starfruit
 -dessert
 -pie
--pumkin
+-pumpkin
 -squash
--zuccini
+-zucchini
 -carrot
 -tomato
 -radish
@@ -153,6 +207,15 @@ food
 -spinach
 -mushrooms
 -onion
+-broccoli
+-cauliflower
+-bell pepper
+-eggplant
+-corn
+-potato
+-sweet potato
+-garlic
+-ginger
 
 
 -cake
@@ -161,12 +224,21 @@ food
 -rice cake
 -waffle
 -pancake
--cinnomonroll
+-cinnamon roll
 -bun 
-- 
+-donut
+-cookie
+-brownie
+-ice cream cone
+-popsicle
+-macaron
+-tart
+-croissant
+-bagel
+-pretzel
 
 -wrapped present
--ribon
+-ribbon
 -bows
 -banner
 -confetti
@@ -187,7 +259,8 @@ food
 --flip flop
 --sandal
 --slipper
---
+--high heel
+--clog
 -table
 -animal burrow
 -snowflake
@@ -201,7 +274,7 @@ food
 -towel
 -book
 -bookcase
--statue (can make it of anything just make it looke rockish)
+-statue (can make it of anything just make it look rockish)
 -vase
 -jar
 -cup 
@@ -226,7 +299,10 @@ food
 --molten lava
 --cooled lava
 --seabed
---
+--stalactite
+--stalagmite
+--mountain peak
+--volcano
 
 -stove
 -oven
@@ -235,13 +311,17 @@ food
 -spoon
 -butter knife
 -napkin
--hankerchief
+-handkerchief
 -tissue box
 -paper towels
 -pan 
 -bowl
 -plate
 -tongs
+-rolling pin
+-grater
+-kettle
+-toaster
 
 -eye
 -lips (with or without piercings)
@@ -254,3 +334,10 @@ food
 -torso
 -hand (with or without rings/ scars/ manicure/)
 -tattoo on a body part
+-brain
+-heart (anatomical or stylized)
+-skeleton
+-skull
+-muscles
+-lungs
+-ribcage
