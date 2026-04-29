@@ -36,6 +36,10 @@ void main() {
     // Randomize Sub-topic
     await tester.tap(find.text('Sub-topic'));
     await tester.pumpAndSettle();
+
+    // Randomize Adjective
+    await tester.tap(find.text('Adjective'));
+    await tester.pumpAndSettle();
     
     // Randomize Noun
     await tester.tap(find.text('Noun'));
@@ -77,6 +81,7 @@ void main() {
     expect(snapshot.exists, true);
     final data = snapshot.value as Map;
     expect(data['subTopic'], isNotNull);
+    expect(data['adjective'], isNotNull);
     expect(data['noun'], isNotNull);
     expect(data['style'], isNotNull);
   });

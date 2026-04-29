@@ -22,10 +22,12 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
   final Random _random = Random();
 
   final List<String> _subTopics = ['Nature', 'Buildings', 'Animals', 'People', 'Fantasy', 'Space', 'Underwater'];
+  final List<String> _adjectives = ['Giant', 'Tiny', 'Glowing', 'Ancient', 'Mechanical', 'Floating', 'Colorful', 'Mysterious', 'Spooky', 'Elegant'];
   final List<String> _nouns = ['Trees', 'Skyscrapers', 'Dragons', 'Warriors', 'Planets', 'Coral Reefs', 'Ancient Ruins', 'Robots'];
   final List<String> _styles = ['Realism', 'Minimalism', 'Cartoonish', 'Impressionism', 'Cyberpunk', 'Sketchy', 'Watercolor', 'Pop Art'];
 
   String _selectedSubTopic = '...';
+  String _selectedAdjective = '...';
   String _selectedNoun = '...';
   String _selectedStyle = '...';
 
@@ -53,6 +55,7 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
         final data = Map<dynamic, dynamic>.from(snapshot.value as Map);
         setState(() {
           _selectedSubTopic = data['subTopic'] ?? '...';
+          _selectedAdjective = data['adjective'] ?? '...';
           _selectedNoun = data['noun'] ?? '...';
           _selectedStyle = data['style'] ?? '...';
         });
@@ -76,6 +79,7 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
     try {
       await effectiveDatabase.ref('users/${user.uid}/state/complexPrompt').set({
         'subTopic': _selectedSubTopic,
+        'adjective': _selectedAdjective,
         'noun': _selectedNoun,
         'style': _selectedStyle,
         'updatedAt': ServerValue.timestamp,
@@ -88,6 +92,13 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
   void _randomizeSubTopic() {
     setState(() {
       _selectedSubTopic = _subTopics[_random.nextInt(_subTopics.length)];
+    });
+    _saveStateToDatabase();
+  }
+
+  void _randomizeAdjective() {
+    setState(() {
+      _selectedAdjective = _adjectives[_random.nextInt(_adjectives.length)];
     });
     _saveStateToDatabase();
   }
@@ -109,6 +120,7 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
   void _randomizeAll() {
     setState(() {
       _selectedSubTopic = _subTopics[_random.nextInt(_subTopics.length)];
+      _selectedAdjective = _adjectives[_random.nextInt(_adjectives.length)];
       _selectedNoun = _nouns[_random.nextInt(_nouns.length)];
       _selectedStyle = _styles[_random.nextInt(_styles.length)];
     });
@@ -164,6 +176,11 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
                     ),
                     const TextSpan(text: ' with '),
                     TextSpan(
+                      text: _selectedAdjective,
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, decoration: TextDecoration.underline),
+                    ),
+                    const TextSpan(text: ' '),
+                    TextSpan(
                       text: _selectedNoun,
                       style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, decoration: TextDecoration.underline),
                     ),
@@ -187,6 +204,11 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
                   onPressed: _randomizeSubTopic,
                   style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
                   child: const Text('Sub-topic'),
+                ),
+                ElevatedButton(
+                  onPressed: _randomizeAdjective,
+                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+                  child: const Text('Adjective'),
                 ),
                 ElevatedButton(
                   onPressed: _randomizeNoun,
