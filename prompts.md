@@ -80,10 +80,10 @@
 
 
 33. [x] Test that the email reminders work properly and the link sent in the emails works. Check that email reminders are being sent to users that want to recieve notifications 
-<!--
+
 34. [ ] Impliment requirment 13 from the requirments.md file
 
--->
+
 
 
 
