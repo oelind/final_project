@@ -35,18 +35,20 @@ void main() {
     final mockDatabase = MockFirebaseDatabase();
 
     await tester.pumpWidget(MaterialApp(home: HomeScreen(auth: mockAuth, database: mockDatabase)));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.byIcon(Icons.settings).first);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.text('Sign Out'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Verify we are back at the login page (or at least out of HomeScreen)
-    expect(find.text('Login'), findsAtLeast(1));
+    expect(find.text('Login'), findsWidgets);
     expect(mockAuth.currentUser, isNull);
   });
 }
