@@ -6,6 +6,7 @@ import 'widgets/drawing_card.dart';
 import 'widgets/goal_progress_widget.dart';
 import 'widgets/drawing_log_dialog.dart';
 import 'widgets/prompt_generator_widget.dart';
+import 'widgets/complex_prompt_generator_widget.dart';
 import 'services/signout_user.dart';
 import 'goal_setup_screen.dart';
 import 'login_page.dart';
@@ -176,6 +177,11 @@ class HomeScreen extends StatelessWidget {
                             auth: effectiveAuth,
                             database: effectiveDatabase,
                           ),
+                          const SizedBox(height: 10),
+                          ComplexPromptGeneratorWidget(
+                            auth: effectiveAuth,
+                            database: effectiveDatabase,
+                          ),
                         ],
                       ),
                     ),
@@ -184,11 +190,17 @@ class HomeScreen extends StatelessWidget {
 
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: drawings.length + 1,
+                  itemCount: drawings.length + 2,
                   itemBuilder: (context, index) {
                     if (index == drawings.length) {
                       return PromptGeneratorWidget(
                         initialPrompts: initialPrompts,
+                        auth: effectiveAuth,
+                        database: effectiveDatabase,
+                      );
+                    }
+                    if (index == drawings.length + 1) {
+                      return ComplexPromptGeneratorWidget(
                         auth: effectiveAuth,
                         database: effectiveDatabase,
                       );
