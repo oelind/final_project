@@ -59,9 +59,9 @@
 
 25. [x] Also check that all currently implimented features are in the realtime database.
 
-<!--
-26. [ ] Use the following hex codes for the theme/ coloring of the app as if you were an intermediate web app designer #B1CFA0, #452741, #B9DACE, #154956, #754743 
 
+26. [ ] Use the following hex codes for the theme/ coloring of the app as if you were an intermediate web app designer #B1CFA0, #452741, #B9DACE, #154956, #754743 
+<!--
 27. [ ] Check that the database import is properly implimented in requirment_11_test.dart and requirment_7_test.dart if the databse needs to be implimented and if it doesnt remove the unused import. Also resolve the error in the firbase.json file about the property flutter not being allowed in a way that everything still works properly/ as initially intended.
 
 28. [ ] Add fuzzing tests to try to find if there are any cases that need to be added to the tests. If any errors or corner cases are found fix the code and add the corner cases to the tests. 
