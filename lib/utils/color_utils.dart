@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 
-//This function recieves the amount of effort the user
-//has entered on their drawing entry and then to account for the possibility
-//that the string entered (if any) has any capital letters the case is swapped
-//to lower so all characters have the same case to match the strings of the 
-//test statments for each case
+// Brand Colors from Prompt 26
+class AppColors {
+  static const Color sageGreen = Color(0xFFB1CFA0);
+  static const Color deepPlum = Color(0xFF452741);
+  static const Color lightAqua = Color(0xFFB9DACE);
+  static const Color darkTeal = Color(0xFF154956);
+  static const Color terracotta = Color(0xFF754743);
 
-//It then asigns a color to each case (default if nothing was given, high effort
-// medium effort, or low effort)
-//In this context effort means how much the user thought they tried on making
-//the drawing
+  // Semantic aliases
+  static const Color primary = darkTeal;
+  static const Color secondary = sageGreen;
+  static const Color accent = terracotta;
+  static const Color background = lightAqua;
+  static const Color surface = Colors.white;
+}
+
 Color getEffortColor(String effort) {
   switch (effort.toLowerCase()) { 
     case 'high':
-      return Colors.redAccent;
+      return AppColors.terracotta;
     case 'medium':
-      return Colors.orangeAccent;
+      return AppColors.sageGreen;
     case 'low':
-      return Colors.greenAccent;
+      return AppColors.lightAqua;
     default:
-      return Colors.blueAccent;
+      return AppColors.darkTeal;
   }
 }
