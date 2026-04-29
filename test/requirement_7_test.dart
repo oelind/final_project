@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_database_mocks/firebase_database_mocks.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   test('Requirement 7: Data isolation - User A cannot see User B\'s drawings', () async {
