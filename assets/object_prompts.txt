@@ -341,3 +341,203 @@ food
 -muscles
 -lungs
 -ribcage
+
+space
+-moon
+--crescent
+--full moon
+--new moon
+-sun
+-stars
+--constellation
+--shooting star
+-comet
+-asteroid
+-planet
+--Saturn with rings
+--Jupiter's eye
+--Mars (red planet)
+-galaxy
+--spiral galaxy
+--milky way
+-black hole
+-nebula
+-astronaut
+--helmet
+--spacesuit
+--floating in zero-g
+-rocket ship
+-space shuttle
+-satellite
+-space station
+-telescope
+-alien
+-UFO/Flying saucer
+
+music
+-guitar
+--acoustic
+--electric
+--bass
+-violin
+-cello
+-piano
+--grand piano
+--keyboard
+-trumpet
+-trombone
+-saxophone
+-flute
+-clarinet
+-drums
+--drum kit
+--snare
+--cymbals
+--bongo
+-harp
+-accordion
+-harmonica
+-ukulele
+-banjo
+-microphone
+--vintage mic
+-headphones
+-speakers
+-cassette tape
+-vinyl record
+--record player/turntable
+-sheet music
+-metronome
+-tuning fork
+
+clothing & accessories
+-hat
+--top hat
+--beanie
+--beret
+--fedora
+--cowboy hat
+--sun hat
+-scarf
+-gloves
+--mittens
+-glasses
+--sunglasses
+--reading glasses
+--monocle
+-jewelry
+--necklace
+--pendant
+--bracelet
+--ring
+--earrings
+--brooch
+-watch
+--pocket watch
+-necktie
+--bow tie
+-belt
+-backpack
+-handbag/purse
+-wallet
+-umbrella
+-cape/cloak
+-armor
+--helmet
+--gauntlet
+--shield
+--breastplate
+-crown
+--tiara
+
+tools & hardware
+-hammer
+-wrench
+-screwdriver
+-pliers
+-saw
+-drill
+-axe
+-shovel
+-rake
+-ladder
+-flashlight
+-lantern
+-candle
+-matches
+-lighter
+-compass
+-key
+--skeleton key
+-lock
+--padlock
+-toolbox
+-scissors
+-needle and thread
+-yarn ball
+-knitting needles
+
+architecture & structures
+-castle
+--tower
+--moat
+--drawbridge
+-lighthouse
+-windmill
+-watermill
+-cabin
+-cottage
+-pagoda
+-pyramid
+-temple
+-skyscrapers
+-bridge
+--stone arch bridge
+--suspension bridge
+-fountain
+-gate
+-fence
+-mailbox
+-street lamp
+
+mythology & folklore
+-phoenix
+-griffin
+-centaur
+-pegasus
+-minotaur
+-medusa
+-hydra
+-chimera
+-cerberus
+-sphinx
+-dragon (oriental or western)
+-unicorn
+-kitsune (many-tailed fox)
+-kraken
+-yeti/bigfoot
+-troll
+-goblin
+-elf
+-dwarf
+-wizard
+--magic wand
+--spellbook
+--crystal ball
+-witch
+--cauldron
+--broomstick
+
+weather & phenomena
+-lightning bolt
+-thunderstorm
+-hurricane/cyclone
+-rainbow
+-aurora borealis (northern lights)
+-eclipse (solar or lunar)
+-fog/mist
+-sunbeams/crepuscular rays
+-sandstorm
+-hailstone
+-dewdrops
+-puddle
