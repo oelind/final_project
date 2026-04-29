@@ -78,7 +78,9 @@
 <!--
 31. [ ] Add more object propmpts to the single prompt generator's object_prompts.txt file similar to what is already in it but no repeats please.
 
-32. [ ] Impliment requirment 13 from the requirments.md file
+32. [ ] Test that the email reminders work properly and the link sent in the emails works. Check that email reminders are being sent to users that want to recieve notifications
+
+33. [ ] Impliment requirment 13 from the requirments.md file
 
 -->
 
