@@ -64,6 +64,7 @@
 
 27. [ ] Check that the database import is properly implimented in requirment_11_test.dart and requirment_7_test.dart if the databse needs to be implimented and if it doesnt remove the unused import. Also resolve the error in the firbase.json file about the property flutter not being allowed in a way that everything still works properly/ as initially intended.
 
+<!--
 28. [ ] Add fuzzing tests to try to find if there are any cases that need to be added to the tests. If any errors or corner cases are found fix the code and add the corner cases to the tests. 
 
 29. [ ] Add regression tests to all files containing tests and check that the app passes all current tests. If any tests are not passed fix the code until all tests are passed.
