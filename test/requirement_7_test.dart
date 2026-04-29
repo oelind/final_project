@@ -35,4 +35,17 @@ void main() {
     expect(drawingsB.length, 1);
     expect(drawingsB.values.first['title'], 'B\'s Art');
   });
+
+  test('Regression Test: User settings are isolated', () async {
+    final mockDatabase = MockFirebaseDatabase();
+    
+    await mockDatabase.ref('users/user_a/settings').set({'timeGoal': 10.0});
+    await mockDatabase.ref('users/user_b/settings').set({'timeGoal': 20.0});
+
+    final snapshotA = await mockDatabase.ref('users/user_a/settings').get();
+    expect((snapshotA.value as Map)['timeGoal'], 10.0);
+
+    final snapshotB = await mockDatabase.ref('users/user_b/settings').get();
+    expect((snapshotB.value as Map)['timeGoal'], 20.0);
+  });
 }

@@ -201,6 +201,25 @@ void main() {
       final data = snapshot.value as Map? ?? {};
       expect(data.length, count);
     });
+
+    test('Regression Test: Verify updating an existing drawing entry works correctly', () async {
+      const uid = 'user_update_drawing';
+      final drawingRef = database.ref('users/$uid/drawings').push();
+      await drawingRef.set({
+        'userId': uid,
+        'title': 'Original Title',
+        'timeSpentMinutes': 10,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      });
+
+      await drawingRef.update({'title': 'Updated Title'});
+
+      final snapshot = await drawingRef.get();
+      final data = snapshot.value as Map;
+      expect(data['title'], 'Updated Title');
+      expect(data['timeSpentMinutes'], 10); // Should remain same
+    });
+
    group('Database-Specific Integration Tests', () {
     test('Verify RTDB is being used (Mock check)', () {
       expect(database, isA<MockFirebaseDatabase>());

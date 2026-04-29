@@ -146,5 +146,28 @@ void main() {
         }
       }
     });
+
+    test('Regression Test: Fuzz Drawing.toMap with various instances', () {
+      for (int i = 0; i < 100; i++) {
+        try {
+          final drawing = Drawing(
+            userId: random.nextBool() ? 'user_${random.nextInt(100)}' : '',
+            title: random.nextBool() ? 'Title ${random.nextInt(100)}' : '',
+            description: random.nextBool() ? 'Desc ${random.nextInt(100)}' : '',
+            colors: random.nextBool() ? ['Red', 'Green'] : [],
+            mediums: random.nextBool() ? ['Pencil'] : [],
+            size: random.nextBool() ? 'Large' : '',
+            effort: random.nextBool() ? 'High' : '',
+            timestamp: DateTime.fromMillisecondsSinceEpoch(random.nextInt(1000000000)),
+            timeSpent: Duration(minutes: random.nextInt(500)),
+            wasPromptUsed: random.nextBool(),
+          );
+          final map = drawing.toMap();
+          expect(map, isA<Map<String, dynamic>>());
+        } catch (e) {
+          fail('Drawing.toMap crashed during fuzzing: $e');
+        }
+      }
+    });
   });
 }

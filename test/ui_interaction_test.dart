@@ -113,4 +113,31 @@ void main() {
     // Check if Save button is present and clickable
     expect(find.text('Save & Continue'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Dialog cancellation does not save data', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (context) => ElevatedButton(
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => DrawingLogDialog(auth: mockAuth, database: mockDatabase),
+            ),
+            child: const Text('Open Dialog'),
+          ),
+        ),
+      ),
+    ));
+
+    await tester.tap(find.text('Open Dialog'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextFormField, 'Title (Optional)'), 'Cancelled Artwork');
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    final userId = mockAuth.currentUser!.uid;
+    final snapshot = await mockDatabase.ref('users/$userId/drawings').get();
+    expect(snapshot.exists, false);
+  });
 }

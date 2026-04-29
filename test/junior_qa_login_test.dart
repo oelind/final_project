@@ -65,4 +65,23 @@ void main() {
     // Now we expect a login failure message
     expect(find.text('Login failed. Please check your credentials.'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Navigate to Signup and back to Login', (WidgetTester tester) async {
+    mockAuth = MockFirebaseAuth();
+
+    await tester.pumpWidget(DrawingLogApp(
+      auth: mockAuth,
+      database: mockDatabase,
+    ));
+
+    // Tap Create Account
+    await tester.tap(find.text('Don\'t have an account? Create one'));
+    await tester.pumpAndSettle();
+    expect(find.text('Create Account'), findsOneWidget);
+
+    // Tap back to Login
+    await tester.tap(find.text('Already have an account? Login'));
+    await tester.pumpAndSettle();
+    expect(find.text('Login'), findsAtLeast(1));
+  });
 }

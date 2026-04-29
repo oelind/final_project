@@ -34,4 +34,32 @@ void main() {
       findsOneWidget
     );
   });
+
+  testWidgets('Regression Test: Consecutive prompt generation works', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+    final prompts = ['A', 'B', 'C'];
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: PromptGeneratorWidget(
+          initialPrompts: prompts,
+          auth: mockAuth,
+          database: mockDatabase,
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    for (int i = 0; i < 5; i++) {
+      await tester.tap(find.text('Generate Random Prompt'));
+      await tester.pumpAndSettle();
+      expect(
+        find.byWidgetPredicate((widget) => 
+          widget is Text && prompts.contains(widget.data)), 
+        findsOneWidget
+      );
+    }
+  });
 }

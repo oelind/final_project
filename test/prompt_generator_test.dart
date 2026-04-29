@@ -52,4 +52,26 @@ void main() {
     }
     expect(foundRandomPrompt, true);
   });
+
+  testWidgets('Regression Test: Generate multiple prompts consecutively', (WidgetTester tester) async {
+    final auth = MockFirebaseAuth();
+    final FirebaseDatabase database = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: PromptGeneratorWidget(
+          auth: auth,
+          database: database,
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    for (int i = 0; i < 5; i++) {
+      await tester.tap(find.text('Generate Random Prompt'));
+      await tester.pump();
+      // No crashes
+    }
+    expect(find.text('Drawing Prompt Generator'), findsOneWidget);
+  });
 }

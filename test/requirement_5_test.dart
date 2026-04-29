@@ -41,4 +41,28 @@ void main() {
     expect(find.text('Effort Level'), findsOneWidget);
     expect(find.text('Save'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Log dialog handles long titles', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid_long');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: DrawingLogDialog(auth: mockAuth, database: mockDatabase),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final longTitle = 'A' * 100;
+    await tester.enterText(find.widgetWithText(TextFormField, 'Title (Optional)'), longTitle);
+    await tester.enterText(find.widgetWithText(TextFormField, 'Time Spent (Minutes)'), '30');
+    
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    final snapshot = await mockDatabase.ref('users/test_uid_long/drawings').get();
+    final data = snapshot.value as Map;
+    expect(data.values.first['title'], longTitle);
+  });
 }

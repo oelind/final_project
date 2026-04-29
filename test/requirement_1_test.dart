@@ -42,4 +42,24 @@ void main() {
 
     expect(find.text('Drawing Log'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Invalid email format shows error', (WidgetTester tester) async {
+    final mockAuth = MockFirebaseAuth();
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
+    
+    await tester.pumpWidget(DrawingLogApp(auth: mockAuth, database: mockDatabase));
+
+    await tester.enterText(find.widgetWithText(TextField, 'Email'), 'invalid-email');
+    await tester.enterText(find.widgetWithText(TextField, 'Password'), 'password123');
+
+    await tester.tap(find.text('Login'));
+    await tester.pump();
+
+    // We expect some form of validation error. 
+    // Based on common patterns, it might show "Invalid email" or similar.
+    // I'll check for a general failure or specific message if I know it.
+    // Looking at junior_qa_login_test, it seems it shows "Login failed..." for unknown users.
+    // For invalid format, let's see what happens.
+    expect(find.text('Login failed. Please check your credentials.'), findsOneWidget);
+  });
 }

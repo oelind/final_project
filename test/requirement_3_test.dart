@@ -39,4 +39,28 @@ void main() {
     final snapshot = await mockDatabase.ref('users/test_uid/settings/wantNotifications').get();
     expect(snapshot.value, true);
   });
+
+  testWidgets('Regression Test: Notification switch can be toggled off and persists', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid_off');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    // 1. Initial state (toggle on then off)
+    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
+    await tester.pumpAndSettle();
+
+    final switchFinder = find.byType(Switch);
+    await tester.tap(switchFinder); // Toggle ON
+    await tester.pumpAndSettle();
+    await tester.tap(switchFinder); // Toggle OFF
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).first, '5');
+    await tester.tap(find.text('Save & Continue'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
+
+    final snapshot = await mockDatabase.ref('users/test_uid_off/settings/wantNotifications').get();
+    expect(snapshot.value, false);
+  });
 }

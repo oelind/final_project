@@ -28,4 +28,23 @@ void main() {
     expect(find.text('Notification Settings'), findsOneWidget);
     expect(find.text('Sign Out'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Signing out redirects to login page', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid_signout');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(home: HomeScreen(auth: mockAuth, database: mockDatabase)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.settings).first);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Sign Out'));
+    await tester.pumpAndSettle();
+
+    // Verify we are back at the login page (or at least out of HomeScreen)
+    expect(find.text('Login'), findsAtLeast(1));
+    expect(mockAuth.currentUser, isNull);
+  });
 }

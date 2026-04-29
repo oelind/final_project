@@ -71,4 +71,28 @@ void main() {
     expect(find.text('100.0%'), findsOneWidget);
     expect(find.textContaining('Congratulations!'), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Zero goal handled gracefully', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    // Set goal to 0 hours
+    await mockDatabase.ref('users/test_uid/settings').set({
+      'timeGoal': 0.0,
+      'isWeeklyGoal': true,
+    });
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: GoalProgressWidget(auth: mockAuth, database: mockDatabase),
+      ),
+    ));
+    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    // Should not crash and should show 100% or similar handled state
+    expect(find.byType(LinearProgressIndicator), findsOneWidget);
+  });
 }

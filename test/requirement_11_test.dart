@@ -33,4 +33,16 @@ void main() {
     expect(data.length, 1);
     expect(data.values.first['title'], 'Firebase Artwork');
   });
+
+  test('Regression Test: Update user settings in database', () async {
+    final mockDatabase = MockFirebaseDatabase();
+    const uid = 'user_999';
+    
+    await mockDatabase.ref('users/$uid/settings').set({'timeGoal': 5.0});
+    await mockDatabase.ref('users/$uid/settings').update({'timeGoal': 15.0});
+
+    final snapshot = await mockDatabase.ref('users/$uid/settings').get();
+    final data = snapshot.value as Map;
+    expect(data['timeGoal'], 15.0);
+  });
 }

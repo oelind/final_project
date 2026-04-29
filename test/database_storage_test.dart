@@ -123,5 +123,19 @@ void main() {
       expect(snapshot.exists, true);
       expect(snapshot.value, lastPrompt);
     });
+
+    test('Regression Test: Verify deleting a drawing removes it from the database', () async {
+      const uid = 'user_delete_drawing';
+      final drawingRef = database.ref('users/$uid/drawings').push();
+      await drawingRef.set({'title': 'To be deleted', 'userId': uid});
+
+      var snapshot = await database.ref('users/$uid/drawings').get();
+      expect((snapshot.value as Map).length, 1);
+
+      await drawingRef.remove();
+
+      snapshot = await database.ref('users/$uid/drawings').get();
+      expect(snapshot.exists, false);
+    });
   });
 }

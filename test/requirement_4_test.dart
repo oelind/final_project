@@ -47,4 +47,32 @@ void main() {
     final snapshot = await mockDatabase.ref('users/test_uid/settings/reminderFrequency').get();
     expect(snapshot.value, 'Daily');
   });
+
+  testWidgets('Regression Test: Changing reminder frequency persists', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid_freq');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+
+    // Open dropdown
+    await tester.tap(find.byType(DropdownButtonFormField<String>));
+    await tester.pumpAndSettle();
+
+    // Select "Every 2 hours"
+    await tester.tap(find.text('Every 2 hours').last);
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).first, '5');
+    await tester.tap(find.text('Save & Continue'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
+
+    final snapshot = await mockDatabase.ref('users/test_uid_freq/settings/reminderFrequency').get();
+    expect(snapshot.value, 'Every 2 hours');
+  });
 }

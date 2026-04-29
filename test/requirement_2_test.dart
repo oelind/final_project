@@ -58,4 +58,19 @@ void main() {
     final weeklyChip = tester.widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Weekly'));
     expect(weeklyChip.selected, true);
   });
+
+  testWidgets('Regression Test: Entering 0 as a goal is handled', (WidgetTester tester) async {
+    final mockAuth = MockFirebaseAuth(signedIn: true);
+    final FirebaseDatabase mockDatabase = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(home: GoalSetupScreen(auth: mockAuth, database: mockDatabase)));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).first, '0');
+    await tester.tap(find.text('Save & Continue'));
+    await tester.pumpAndSettle();
+
+    // Should show success or handled properly
+    expect(find.text('Goal Saved'), findsOneWidget);
+  });
 }

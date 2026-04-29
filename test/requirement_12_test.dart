@@ -57,5 +57,25 @@ void main() {
       expect(summary.promptsUsedCount, 0);
       expect(summary.promptGeneratorUsed, false);
     });
+
+    test('Regression Test: calculateWeeklySummary with mixed effort levels', () {
+       final drawings = [
+        Drawing(
+          title: 'A',
+          timestamp: DateTime.now(),
+          timeSpent: const Duration(minutes: 10),
+          effort: 'Very High',
+        ),
+        Drawing(
+          title: 'B',
+          timestamp: DateTime.now(),
+          timeSpent: const Duration(minutes: 20),
+          effort: 'Non-existent', // Test unknown effort
+        ),
+      ];
+      final summary = calculateWeeklySummary(drawings);
+      expect(summary.drawingCount, 2);
+      expect(summary.averageTimeSpent.inMinutes, 15);
+    });
   });
 }

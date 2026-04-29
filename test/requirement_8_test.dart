@@ -35,4 +35,24 @@ void main() {
 
     expect(find.byIcon(Icons.play_arrow), findsOneWidget);
   });
+
+  testWidgets('Regression Test: Short timer duration (less than 1 min) shows 0.0', (WidgetTester tester) async {
+    final user = MockUser(uid: 'test_uid_short');
+    final mockAuth = MockFirebaseAuth(mockUser: user, signedIn: true);
+    final mockDatabase = MockFirebaseDatabase();
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: DrawingLogDialog(auth: mockAuth, database: mockDatabase),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.play_arrow));
+    await tester.pump(const Duration(seconds: 10)); // 10 seconds
+    await tester.tap(find.byIcon(Icons.stop));
+    await tester.pump();
+
+    expect(find.text('0.0'), findsOneWidget);
+  });
 }
