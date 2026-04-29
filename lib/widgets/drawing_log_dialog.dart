@@ -204,11 +204,12 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
           child: const Text('Cancel'),
         ),
 
-        //saving entry button
+        //clearing entry button
         ElevatedButton(
           onPressed: _clearFields,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
+            //TODO: change color of text here for visibility
             foregroundColor: AppColors.accent,
           ), //end of style for save button
           child: const Text('Clear fields'),

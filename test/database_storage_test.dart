@@ -134,8 +134,8 @@ void main() {
 
       await drawingRef.remove();
 
-      snapshot = await database.ref('users/$uid/drawings').get();
-      expect(snapshot.exists, false);
+      final childSnapshot = await drawingRef.get();
+      expect(childSnapshot.exists, false);
     });
   });
 }

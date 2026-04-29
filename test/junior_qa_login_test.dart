@@ -79,9 +79,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Create Account'), findsOneWidget);
 
-    // Tap back to Login
-    await tester.tap(find.text('Already have an account? Login'));
+    // Tap back to Login using the AppBar back button
+    await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
-    expect(find.text('Login'), findsAtLeast(1));
+    expect(find.text('Login'), findsWidgets);
   });
 }

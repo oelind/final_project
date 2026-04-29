@@ -59,15 +59,23 @@ void main() {
     });
 
     test('Regression Test: calculateWeeklySummary with mixed effort levels', () {
-       final drawings = [
+       final drawings = <Drawing>[
         Drawing(
           title: 'A',
+          description: '',
+          colors: [],
+          mediums: [],
+          size: '',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 10),
           effort: 'Very High',
         ),
         Drawing(
           title: 'B',
+          description: '',
+          colors: [],
+          mediums: [],
+          size: '',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 20),
           effort: 'Non-existent', // Test unknown effort

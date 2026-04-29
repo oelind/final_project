@@ -28,10 +28,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     final effectiveAuth = auth ?? FirebaseAuth.instance;
     final effectiveDatabase = database ?? FirebaseDatabase.instance;
     final user = effectiveAuth.currentUser;
+
+    if (user == null) {
+      return const Scaffold(body: SizedBox.shrink());
+    }
 
     return Scaffold(
       appBar: AppBar(

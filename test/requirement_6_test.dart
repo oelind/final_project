@@ -41,7 +41,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Sign Out'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 100));
 
     // Verify we are back at the login page (or at least out of HomeScreen)
     expect(find.text('Login'), findsAtLeast(1));

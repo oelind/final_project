@@ -49,7 +49,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.play_arrow));
-    await tester.pump(const Duration(seconds: 10)); // 10 seconds
+    await tester.pump(const Duration(seconds: 1)); // 1 second
     await tester.tap(find.byIcon(Icons.stop));
     await tester.pump();
 

@@ -14,6 +14,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: PromptGeneratorWidget(
+          initialPrompts: const ['Apple', 'Banana', 'Cat'],
           auth: auth,
           database: database,
         ),
@@ -60,6 +61,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: PromptGeneratorWidget(
+          initialPrompts: const ['P1', 'P2', 'P3'],
           auth: auth,
           database: database,
         ),

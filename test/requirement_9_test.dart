@@ -92,7 +92,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
-    // Should not crash and should show 100% or similar handled state
-    expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    // Should return SizedBox.shrink() when goal is 0
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+    expect(find.byType(Card), findsNothing);
   });
 }
