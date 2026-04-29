@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import '../utils/color_utils.dart';
 
 class DrawingLogDialog extends StatefulWidget {
   final FirebaseDatabase? database;
@@ -143,7 +144,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                   labelText: 'Time Spent (Minutes)',
                   suffixIcon: IconButton(
                     icon: Icon(_isTimerRunning ? Icons.stop : Icons.play_arrow),
-                    color: _isTimerRunning ? Colors.red : Colors.green,
+                    color: _isTimerRunning ? AppColors.terracotta : AppColors.sageGreen,
                     onPressed: _toggleTimer,
                   ),
                 ),
@@ -158,7 +159,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
                   //shows the amount of time that has passed since the timer was started
                   child: Text(
                     'Timer active: ${(_secondsElapsed ~/ 60)}m ${(_secondsElapsed % 60)}s',
-                    style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
                   ),
                 ),
               const SizedBox(height: 12),
@@ -208,7 +209,7 @@ class _DrawingLogDialogState extends State<DrawingLogDialog> {
           onPressed: _clearFields,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
-            foregroundColor: Colors.orangeAccent,
+            foregroundColor: AppColors.accent,
           ), //end of style for save button
           child: const Text('Clear fields'),
         ),

@@ -46,7 +46,7 @@ class DrawingCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               drawing.description,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
+              style: const TextStyle(fontSize: 14, color: AppColors.deepPlum),
             ),
             const Divider(height: 24),
             DrawingDetailRow(label: 'Colors:', value: drawing.colors.join(', ')),
@@ -61,7 +61,7 @@ class DrawingCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.blueGrey,
+                  color: AppColors.primary,
                 ),
               ),
             ),

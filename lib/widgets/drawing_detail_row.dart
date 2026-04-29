@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/color_utils.dart';
 
 class DrawingDetailRow extends StatelessWidget {
   final String label;
@@ -15,7 +16,11 @@ class DrawingDetailRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold, 
+              fontSize: 13,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(width: 8),
           Expanded(

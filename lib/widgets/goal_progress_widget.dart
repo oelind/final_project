@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/drawing.dart';
+import '../utils/color_utils.dart';
 
 class GoalProgressWidget extends StatelessWidget {
   final FirebaseAuth? auth;
@@ -105,7 +106,7 @@ class GoalProgressWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: goalReached ? Colors.green : Colors.blue,
+                            color: goalReached ? AppColors.sageGreen : AppColors.primary,
                           ),
                         ),
                       ],
@@ -118,21 +119,21 @@ class GoalProgressWidget extends StatelessWidget {
                         minHeight: 12,
                         backgroundColor: Colors.grey[200],
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          goalReached ? Colors.green : Colors.blue,
+                          goalReached ? AppColors.sageGreen : AppColors.primary,
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       '${totalHoursSpent.toStringAsFixed(1)} / ${timeGoal.toStringAsFixed(1)} hours logged',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: const TextStyle(color: AppColors.deepPlum),
                     ),
                     if (goalReached) ...[
                       const SizedBox(height: 12),
                       const Text(
                         '🎉 Congratulations! You have completed more than your goal!',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: AppColors.sageGreen,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),

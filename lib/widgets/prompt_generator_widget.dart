@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../utils/color_utils.dart';
 
 class PromptGeneratorWidget extends StatefulWidget {
   final List<String>? initialPrompts;
@@ -128,19 +129,27 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
           children: [
             const Text(
               'Drawing Prompt Generator',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18, 
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: AppColors.lightAqua.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[300]!),
+                border: Border.all(color: AppColors.darkTeal.withOpacity(0.5)),
               ),
               child: Text(
                 _currentPrompt,
-                style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                style: const TextStyle(
+                  fontSize: 20, 
+                  fontStyle: FontStyle.italic,
+                  color: AppColors.deepPlum,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

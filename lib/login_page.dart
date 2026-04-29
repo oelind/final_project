@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'home_screen.dart';
 import 'signup_page.dart';
 import 'services/login_user.dart';
+import 'utils/color_utils.dart';
 
 class LoginPage extends StatefulWidget {
   final FirebaseAuth? auth;
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 48),
-              const Icon(Icons.brush, size: 80, color: Colors.blueAccent),
+              const Icon(Icons.brush, size: 80, color: AppColors.primary),
               const SizedBox(height: 24),
               const Text(
                 'Welcome Back',

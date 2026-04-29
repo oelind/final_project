@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'services/signup_user.dart';
+import 'utils/color_utils.dart';
 
 class SignUpPage extends StatefulWidget {
   final FirebaseAuth? auth;
@@ -130,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.person_add, size: 80, color: Colors.blueAccent),
+              const Icon(Icons.person_add, size: 80, color: AppColors.primary),
               const SizedBox(height: 24),
               TextField(
                 controller: _emailController,
