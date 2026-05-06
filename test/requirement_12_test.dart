@@ -41,21 +41,19 @@ void main() {
         ),
       ];
 
-      final summary = calculateWeeklySummary(drawings, promptGeneratorPressed: true);
+      final summary = calculateWeeklySummary(drawings, 1);
 
       expect(summary.drawingCount, 3);
       expect(summary.averageTimeSpent.inMinutes, 60); // (30+60+90)/3 = 60
-      expect(summary.promptsUsedCount, 2);
-      expect(summary.promptGeneratorUsed, true);
+      expect(summary.promptGeneratorsPressedCount, 1);
     });
 
     test('calculateWeeklySummary should handle empty list', () {
-      final summary = calculateWeeklySummary([]);
+      final summary = calculateWeeklySummary([], 0);
 
       expect(summary.drawingCount, 0);
       expect(summary.averageTimeSpent, Duration.zero);
-      expect(summary.promptsUsedCount, 0);
-      expect(summary.promptGeneratorUsed, false);
+      expect(summary.promptGeneratorsPressedCount, 0);
     });
 
     test('Regression Test: calculateWeeklySummary with mixed effort levels', () {
@@ -81,7 +79,7 @@ void main() {
           effort: 'Non-existent', // Test unknown effort
         ),
       ];
-      final summary = calculateWeeklySummary(drawings);
+      final summary = calculateWeeklySummary(drawings, 0);
       expect(summary.drawingCount, 2);
       expect(summary.averageTimeSpent.inMinutes, 15);
     });

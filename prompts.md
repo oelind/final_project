@@ -83,7 +83,7 @@
 
 34. [x] Impliment requirment 13 from the requirments.md file
 
-35. [ ] Also create tests that include fuzzing and regression tests for requirment 13. Alco check that the latest added feature for this requirment has been added to the real-time database.
+35. [x] Also create tests that include fuzzing and regression tests for requirment 13. Alco check that the latest added feature for this requirment has been added to the real-time database.
 
 
 
