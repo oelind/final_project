@@ -101,6 +101,7 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
         await effectiveDatabase.ref('users/${user.uid}/state').update({
           'lastPrompt': newPrompt,
         });
+        await effectiveDatabase.ref('users/${user.uid}/prompt_presses').push().set(ServerValue.timestamp);
       } catch (e) {
         debugPrint('Error saving last prompt: $e');
       }

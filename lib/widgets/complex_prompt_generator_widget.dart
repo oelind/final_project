@@ -84,6 +84,7 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
         'style': _selectedStyle,
         'updatedAt': ServerValue.timestamp,
       });
+      await effectiveDatabase.ref('users/${user.uid}/prompt_presses').push().set(ServerValue.timestamp);
     } catch (e) {
       debugPrint('Error saving complex prompt state: $e');
     }

@@ -58,6 +58,16 @@ class HomeScreen extends StatelessWidget {
                     (route) => false,
                   );
                 }
+              } else if (value == 'weekly_summary') {
+                if (context.mounted) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => WeeklySummaryDialog(
+                      auth: effectiveAuth,
+                      database: effectiveDatabase,
+                    ),
+                  );
+                }
               } else if (value == 'goal' || value == 'notifications') {
                 if (context.mounted) {
                   Navigator.of(context).push(
@@ -72,6 +82,14 @@ class HomeScreen extends StatelessWidget {
               }
             },
             itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'weekly_summary',
+                child: ListTile(
+                  leading: Icon(Icons.bar_chart),
+                  title: Text('Weekly Summary'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
               const PopupMenuItem(
                 value: 'goal',
                 child: ListTile(
