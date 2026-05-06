@@ -83,7 +83,11 @@
 
 34. [x] Impliment requirment 13 from the requirments.md file
 
+35. [ ] Also create tests that include fuzzing and regression tests for requirment 13. Alco check that the latest added feature for this requirment has been added to the real-time database.
 
+
+
+36. [ ] Fix any syntax errors or depreciated syntax in code for the app. Also check that all features are in the realtime database. If any tests are not passed in any test suite fix the code and run tests until all tests are passed.
 
 
 
