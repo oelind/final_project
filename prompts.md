@@ -87,7 +87,7 @@
 
 
 
-36. [ ] Fix any syntax errors or depreciated syntax in code for the app. Also check that all features are in the realtime database. If any tests are not passed in any test suite fix the code and run tests until all tests are passed.
+36. [x] Fix any syntax errors or depreciated syntax in code for the app. Also check that all features are in the realtime database. If any tests are not passed in any test suite fix the code and run tests until all tests are passed.
 
 
 

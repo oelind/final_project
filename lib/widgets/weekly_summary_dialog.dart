@@ -76,7 +76,7 @@ class _WeeklySummaryDialogState extends State<WeeklySummaryDialog> {
           pressesMap = {};
         }
         
-        pressesMap.values.forEach((val) {
+        for (var val in pressesMap.values) {
           if (val is int && val >= oneWeekAgo) {
             pressCount++;
           } else if (val is Map && val['timestamp'] != null) {
@@ -84,7 +84,7 @@ class _WeeklySummaryDialogState extends State<WeeklySummaryDialog> {
                pressCount++;
              }
           }
-        });
+        }
       }
 
       final summary = calculateWeeklySummary(recentDrawings, pressCount);

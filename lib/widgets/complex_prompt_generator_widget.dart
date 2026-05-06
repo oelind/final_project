@@ -161,9 +161,9 @@ class _ComplexPromptGeneratorWidgetState extends State<ComplexPromptGeneratorWid
               padding: const EdgeInsets.all(16),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColors.lightAqua.withOpacity(0.2),
+                color: AppColors.lightAqua.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.darkTeal.withOpacity(0.3)),
+                border: Border.all(color: AppColors.darkTeal.withValues(alpha: 0.3)),
               ),
               child: RichText(
                 textAlign: TextAlign.center,

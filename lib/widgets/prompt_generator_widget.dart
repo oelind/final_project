@@ -140,9 +140,9 @@ class _PromptGeneratorWidgetState extends State<PromptGeneratorWidget> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.lightAqua.withOpacity(0.3),
+                color: AppColors.lightAqua.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.darkTeal.withOpacity(0.5)),
+                border: Border.all(color: AppColors.darkTeal.withValues(alpha: 0.5)),
               ),
               child: Text(
                 _currentPrompt,

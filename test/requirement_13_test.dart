@@ -8,7 +8,6 @@ import 'package:final_project/widgets/prompt_generator_widget.dart';
 import 'package:final_project/widgets/complex_prompt_generator_widget.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_database_mocks/firebase_database_mocks.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 void main() {
   final random = Random();

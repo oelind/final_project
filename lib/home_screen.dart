@@ -7,6 +7,7 @@ import 'widgets/goal_progress_widget.dart';
 import 'widgets/drawing_log_dialog.dart';
 import 'widgets/prompt_generator_widget.dart';
 import 'widgets/complex_prompt_generator_widget.dart';
+import 'widgets/weekly_summary_dialog.dart';
 import 'services/signout_user.dart';
 import 'goal_setup_screen.dart';
 import 'login_page.dart';
@@ -124,12 +125,8 @@ class HomeScreen extends StatelessWidget {
           GoalProgressWidget(auth: effectiveAuth, database: effectiveDatabase),
           Expanded(
             child: StreamBuilder<DatabaseEvent>(
-              stream: user != null 
-                  ? effectiveDatabase.ref('users/${user.uid}/drawings').onValue
-                  : const Stream.empty(),
+              stream: effectiveDatabase.ref('users/${user.uid}/drawings').onValue,
               builder: (context, snapshot) {
-                final user = effectiveAuth.currentUser;
-
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
@@ -164,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                       }).toList();
                   
                   // Filter by userId in-memory
-                  drawings.addAll(allDrawings.where((d) => d.userId == user?.uid));
+                  drawings.addAll(allDrawings.where((d) => d.userId == user.uid));
                   
                   // Sort by timestamp descending
                   drawings.sort((a, b) => b.timestamp.compareTo(a.timestamp));
