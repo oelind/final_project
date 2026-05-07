@@ -9,9 +9,7 @@ void main() {
         Drawing(
           title: 'Drawing 1',
           description: 'Desc 1',
-          colors: [],
-          mediums: [],
-          size: 'Small',
+
           effort: 'Low',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 30),
@@ -20,9 +18,7 @@ void main() {
         Drawing(
           title: 'Drawing 2',
           description: 'Desc 2',
-          colors: [],
-          mediums: [],
-          size: 'Medium',
+
           effort: 'Medium',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 60),
@@ -31,9 +27,7 @@ void main() {
         Drawing(
           title: 'Drawing 3',
           description: 'Desc 3',
-          colors: [],
-          mediums: [],
-          size: 'Large',
+
           effort: 'High',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 90),
@@ -61,9 +55,7 @@ void main() {
         Drawing(
           title: 'A',
           description: '',
-          colors: [],
-          mediums: [],
-          size: '',
+
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 10),
           effort: 'Very High',
@@ -71,9 +63,7 @@ void main() {
         Drawing(
           title: 'B',
           description: '',
-          colors: [],
-          mediums: [],
-          size: '',
+
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 20),
           effort: 'Non-existent', // Test unknown effort
