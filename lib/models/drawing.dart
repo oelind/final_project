@@ -1,3 +1,8 @@
+//were key data structures for drawings are defined and used
+//in other files like test files and any other files
+//that specifically refrence a drawing log (ie most)
+
+
 class Drawing {
   final String? userId;
   final String title;
