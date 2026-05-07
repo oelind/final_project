@@ -22,7 +22,7 @@ void main() {
           // colors: [],
           // mediums: [],
           // size: '',
-          // effort: 'Low',
+           effort: 'Low',
           timestamp: DateTime.now(),
           timeSpent: const Duration(minutes: 20),
         ),
