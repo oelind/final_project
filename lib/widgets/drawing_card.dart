@@ -49,9 +49,9 @@ class DrawingCard extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: AppColors.deepPlum),
             ),
             const Divider(height: 24),
-            DrawingDetailRow(label: 'Colors:', value: drawing.colors.join(', ')),
-            DrawingDetailRow(label: 'Mediums:', value: drawing.mediums.join(', ')),
-            DrawingDetailRow(label: 'Size:', value: drawing.size),
+            // DrawingDetailRow(label: 'Colors:', value: drawing.colors.join(', ')),
+            // DrawingDetailRow(label: 'Mediums:', value: drawing.mediums.join(', ')),
+            // DrawingDetailRow(label: 'Size:', value: drawing.size),
             DrawingDetailRow(label: 'Time Spent:', value: formatDuration(drawing.timeSpent)),
             const Divider(height: 24),
             Align(
