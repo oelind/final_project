@@ -2,9 +2,9 @@ class Drawing {
   final String? userId;
   final String title;
   final String description;
-  final List<String> colors;
-  final List<String> mediums;
-  final String size;
+  // final List<String> colors;
+  // final List<String> mediums;
+  // final String size;
   final String effort;
   final DateTime timestamp;
   final Duration timeSpent;
@@ -14,9 +14,9 @@ class Drawing {
     this.userId,
     required this.title,
     required this.description,
-    required this.colors,
-    required this.mediums,
-    required this.size,
+    // required this.colors,
+    // required this.mediums,
+    // required this.size,
     required this.effort,
     required this.timestamp,
     required this.timeSpent,
@@ -57,9 +57,9 @@ class Drawing {
       userId: data['userId']?.toString(),
       title: data['title']?.toString() ?? 'Untitled',
       description: data['description']?.toString() ?? '',
-      colors: parseList(data['colors']),
-      mediums: parseList(data['mediums']),
-      size: data['size']?.toString() ?? '',
+      // colors: parseList(data['colors']),
+      // mediums: parseList(data['mediums']),
+      // size: data['size']?.toString() ?? '',
       effort: data['effort']?.toString() ?? 'Medium',
       timestamp: parsedTimestamp,
       timeSpent: Duration(minutes: parseInt(data['timeSpentMinutes'])),
@@ -72,9 +72,9 @@ class Drawing {
       'userId': userId,
       'title': title,
       'description': description,
-      'colors': colors,
-      'mediums': mediums,
-      'size': size,
+      // 'colors': colors,
+      // 'mediums': mediums,
+      // 'size': size,
       'effort': effort,
       'timestamp': timestamp.millisecondsSinceEpoch,
       'timeSpentMinutes': timeSpent.inMinutes,
